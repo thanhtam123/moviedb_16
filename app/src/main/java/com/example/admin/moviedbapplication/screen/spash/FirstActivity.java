@@ -1,7 +1,9 @@
-package com.example.admin.moviedbapplication;
+package com.example.admin.moviedbapplication.screen.spash;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.admin.moviedbapplication.R;
 
 public class FirstActivity extends AppCompatActivity {
 
