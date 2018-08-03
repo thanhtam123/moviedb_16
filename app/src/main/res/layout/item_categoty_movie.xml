@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_tolopea_primary"
+    android:padding="@dimen/padding">
+
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_4dp"
+        android:layout_marginStart="@dimen/margin_4dp"
+        android:layout_marginTop="@dimen/margin_4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_item_name_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_activity_home"
+            android:textColor="@color/color_white_text"
+            android:textSize="@dimen/text_size_category_name_title" />
+
+        <ImageButton
+            android:id="@+id/button_more_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_more_category"
+            android:textColor="@color/color_white_text" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_movie"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_movie_height_category"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_4dp"
+        app:layout_constraintTop_toBottomOf="@id/relative_layout" />
+</android.support.constraint.ConstraintLayout>
