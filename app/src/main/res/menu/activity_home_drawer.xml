@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_home"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@mipmap/ic_favorite"
+            android:title="@string/nav_favorites" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@mipmap/ic_search"
+            android:title="@string/nav_search" />
+        <item
+            android:id="@+id/nav_genre"
+            android:icon="@mipmap/ic_genre"
+            android:title="@string/nav_genres" />
+    </group>
+
+    <item android:title="@string/nav_about_app">
+        <menu>
+            <item
+                android:id="@+id/nav_infor"
+                android:icon="@mipmap/ic_infor"
+                android:title="@string/nav_about" />
+            <item
+                android:id="@+id/nav_rating"
+                android:icon="@mipmap/ic_rate"
+                android:title="@string/nav_rating" />
+        </menu>
+    </item>
+</menu>
