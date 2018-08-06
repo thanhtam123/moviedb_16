@@ -1,5 +1,6 @@
 package com.example.admin.moviedbapplication.data.source.remote;
 
+import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
@@ -26,8 +27,8 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public void getMovies(MovieType type, int page, Callback<List<Movie>> callback) {
-        new MovieRemoteAsynTask(callback).execute();
+    public void getMovies(MovieType type, int page, Callback<Category> callback) {
+        new MovieRemoteAsynTask(callback, type.toString()).execute();
     }
 
     @Override

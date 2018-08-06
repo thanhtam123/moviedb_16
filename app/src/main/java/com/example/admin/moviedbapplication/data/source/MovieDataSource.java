@@ -1,5 +1,6 @@
 package com.example.admin.moviedbapplication.data.source;
 
+import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
@@ -17,7 +18,7 @@ public interface MovieDataSource {
      * @param page          : current page
      * @param callback      : callback
      */
-    void getMovies(MovieType type, int page, Callback<List<Movie>> callback);
+    void getMovies(MovieType type, int page, Callback<Category> callback);
 
     /**
      * Get moives by genre

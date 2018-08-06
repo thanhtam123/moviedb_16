@@ -1,24 +1,18 @@
 package com.example.admin.moviedbapplication.data.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by TamTT on 8/6/2018.
  */
 
 public class Category {
-    private String mId;
     private String mCategeryName;
+    private ArrayList<Movie> mCategoryMovie;
 
-    public Category(String id, String categeryName) {
-        mId = id;
+    public Category(String categeryName, ArrayList<Movie> categoryMovie) {
         mCategeryName = categeryName;
-    }
-
-    public String getId() {
-        return mId;
-    }
-
-    public void setId(String id) {
-        mId = id;
+        mCategoryMovie = categoryMovie;
     }
 
     public String getCategeryName() {
@@ -27,5 +21,13 @@ public class Category {
 
     public void setCategeryName(String categeryName) {
         mCategeryName = categeryName;
+    }
+
+    public ArrayList<Movie> getCategoryMovie() {
+        return mCategoryMovie;
+    }
+
+    public void setCategoryMovie(ArrayList<Movie> categoryMovie) {
+        mCategoryMovie = categoryMovie;
     }
 }
