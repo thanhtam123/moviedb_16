@@ -28,10 +28,10 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public void getMovies(MovieType type, int page, Callback<Category> callback) {
-        String url = API.BASE_URL + API.MOVIE + API.SLASH +
-                type.toString() + API.API_KEY + BuildConfig.ApiKey + API.PAGE + page;
-        new MovieRemoteAsynTask(callback, type.toString()).execute(url);
+    public void getMovies(@MovieType String type, int page, Callback<Category> callback) {
+        String urlPopular = API.BASE_URL + API.MOVIE + API.SLASH + type +
+                API.API_KEY + BuildConfig.ApiKey + API.PAGE + page;
+        new MovieRemoteAsynTask(callback, type).execute(urlPopular);
     }
 
     @Override

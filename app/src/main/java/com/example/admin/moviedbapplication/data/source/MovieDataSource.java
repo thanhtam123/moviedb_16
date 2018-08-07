@@ -18,7 +18,7 @@ public interface MovieDataSource {
      * @param page          : current page
      * @param callback      : callback
      */
-    void getMovies(MovieType type, int page, Callback<Category> callback);
+    void getMovies(@MovieType String type, int page, Callback<Category> callback);
 
     /**
      * Get moives by genre

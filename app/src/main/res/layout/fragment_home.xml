@@ -2,42 +2,23 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <ScrollView
-        android:layout_width="@dimen/margin_0dp"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/margin_0dp"
-        android:layout_marginStart="@dimen/margin_0dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_genre"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recycler_genres_height"
+        android:background="@color/color_orange_peel_star"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_categery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0dp"
+        android:layout_marginBottom="@dimen/margin_0dp"
+        android:background="@color/color_tolopea_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_banner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_0dp"
-                android:layout_weight="0.25" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_genre"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_0dp"
-                android:layout_weight="0.15" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_categery"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_0dp"
-                android:layout_weight="0.6" />
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@id/recycler_genre" />
 </android.support.constraint.ConstraintLayout>

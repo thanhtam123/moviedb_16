@@ -182,6 +182,7 @@ public class Movie {
                 "mVoteCount=" + mVoteCount +
                 ", mTitle='" + mTitle + '\'' +
                 ", mPopularity=" + mPopularity +
+                ", mPosterPath='" + mPosterPath + '\'' +
                 ", mGenreIds=" + Arrays.toString(mGenreIds) +
                 ", mBackdropPath='" + mBackdropPath + '\'' +
                 ", mOverview='" + mOverview + '\'' +

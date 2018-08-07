@@ -2,6 +2,8 @@ package com.example.admin.moviedbapplication.screen.home;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +32,9 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        displaySelectedScreen(R.id.nav_home);
+
     }
 
     @Override
@@ -60,9 +65,33 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        displaySelectedScreen(item.getItemId());
+        return true;
+    }
+
+    public void displaySelectedScreen(int itemId) {
+        Fragment fragment = null;
+        switch (itemId) {
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+                break;
+            case R.id.nav_genre:
+                break;
+            case R.id.nav_favorites:
+                break;
+            case R.id.nav_search:
+                break;
+            case R.id.nav_infor:
+                break;
+            case R.id.nav_rating:
+                break;
+        }
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

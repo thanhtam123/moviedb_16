@@ -13,7 +13,7 @@ import java.util.List;
  * Created by TamTT on 8/6/2018.
  */
 
-public class MovieRepository implements MovieDataSource {
+public class MovieRepository implements MovieDataSource{
     private static MovieRepository sInstance;
     @NonNull
     private MovieDataSource mRemoteDataSource;
@@ -25,6 +25,7 @@ public class MovieRepository implements MovieDataSource {
         mRemoteDataSource = remoteDataSource;
     }
 
+
     public static MovieRepository getInstance(@NonNull MovieDataSource remoteDataSource) {
         if (sInstance == null) {
             sInstance = new MovieRepository(remoteDataSource);
@@ -33,7 +34,7 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public void getMovies(MovieType type, int page, Callback<Category> callback) {
+    public void getMovies(@MovieType String type, int page, Callback<Category> callback) {
         mRemoteDataSource.getMovies(type, page, callback);
     }
 
@@ -41,4 +42,5 @@ public class MovieRepository implements MovieDataSource {
     public void getMovies(Genre genre, Callback<List<Movie>> callback, int page) {
         mRemoteDataSource.getMovies(genre, callback, page);
     }
+
 }
