@@ -8,6 +8,6 @@ import java.util.List;
  * Created by TamTT on 8/6/2018.
  */
 
-public interface CategoryDataSource {
-    void getCategories(Callback<List<Genre>> callback);
+public interface GenresDataSource {
+    void getGenres(Callback<List<Genre>> callback);
 }
