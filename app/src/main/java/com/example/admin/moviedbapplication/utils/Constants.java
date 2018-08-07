@@ -1,4 +1,4 @@
-package com.example.admin.moviedbapplication;
+package com.example.admin.moviedbapplication.utils;
 
 /**
  * Created by TamTT on 8/6/2018.

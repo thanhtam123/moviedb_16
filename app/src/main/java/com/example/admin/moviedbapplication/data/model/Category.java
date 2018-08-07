@@ -30,4 +30,12 @@ public class Category {
     public void setCategoryMovie(ArrayList<Movie> categoryMovie) {
         mCategoryMovie = categoryMovie;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "mCategeryName='" + mCategeryName + '\'' +
+                ", mCategoryMovie=" + mCategoryMovie +
+                '}';
+    }
 }

@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 /**
  * Created by TamTT on 8/6/2018.
  */
@@ -24,7 +26,7 @@ public class Movie {
     private String mOverview;
     private String mReleaseDate;
 
-    private Movie(Builder builder){
+    private Movie(Builder builder) {
         mVoteCount = builder.mVoteCount;
         mId = builder.mId;
         mVideo = builder.mVideo;
@@ -56,7 +58,7 @@ public class Movie {
         mOverview = object.getString(Movie.JsonKey.OVERVIEW);
         mReleaseDate = object.getString(Movie.JsonKey.RELEASE_DATE);
         JSONArray genresArray = object.optJSONArray(Movie.JsonKey.GENRE_IDS);
-        int[] genres = new int[genresArray.length()];
+        mGenreIds = new int[genresArray.length()];
         for (int j = 0; j < genresArray.length(); j++) {
             mGenreIds[j] = genresArray.optInt(j);
         }
@@ -177,14 +179,16 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie{" +
-                "mVideo=" + mVideo +
+                "mVoteCount=" + mVoteCount +
                 ", mTitle='" + mTitle + '\'' +
-                ", mPosterPath='" + mPosterPath + '\'' +
+                ", mPopularity=" + mPopularity +
+                ", mGenreIds=" + Arrays.toString(mGenreIds) +
                 ", mBackdropPath='" + mBackdropPath + '\'' +
+                ", mOverview='" + mOverview + '\'' +
                 '}';
     }
 
-    public static class Builder{
+    public static class Builder {
         private int mVoteCount;
         private String mId;
         private boolean mVideo;
@@ -270,11 +274,12 @@ public class Movie {
             return this;
         }
 
-        public Movie create(){
+        public Movie create() {
             return new Movie(this);
         }
     }
-    public interface JsonKey{
+
+    public interface JsonKey {
         String RESULT = "results";
         String VOTE_COUNT = "vote_count";
         String ID = "id";
