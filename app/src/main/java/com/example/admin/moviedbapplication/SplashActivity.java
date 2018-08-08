@@ -3,7 +3,7 @@ package com.example.admin.moviedbapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class FirstActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

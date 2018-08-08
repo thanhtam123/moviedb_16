@@ -16,5 +16,5 @@ public @interface MovieType {
     String TOP_RATE = "top_rated";
     String POPULAR = "popular";
     String NOW_PLAYING = "now_playing";
-    String UP_COMING  = "up_coming";
+    String UP_COMING  = "upcoming";
 }

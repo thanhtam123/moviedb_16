@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FirstActivity">
+        <activity android:name=".screen.home.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_activity_home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,9 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screen.home.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".SplashActivity" />
     </application>
 
 </manifest>

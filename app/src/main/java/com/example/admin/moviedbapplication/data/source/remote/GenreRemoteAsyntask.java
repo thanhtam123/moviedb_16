@@ -17,6 +17,7 @@ import java.util.List;
 
 public class GenreRemoteAsyntask extends AsyncTask<String, Void, List<Movie>> {
     private Callback<List<Movie>> mCallback;
+
     private Exception mException;
 
     public GenreRemoteAsyntask(Callback<List<Movie>> callback) {
