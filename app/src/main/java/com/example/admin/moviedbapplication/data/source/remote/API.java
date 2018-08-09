@@ -12,4 +12,5 @@ public interface API {
     String SLASH = "/";
     String DISCOVER = "/discover";
     String GENRES = "&with_genres=";
+    String GENRE_LIST = "/genre/list";
 }

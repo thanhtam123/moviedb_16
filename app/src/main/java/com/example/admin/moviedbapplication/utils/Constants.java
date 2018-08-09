@@ -13,6 +13,7 @@ public class Constants {
     public static final String TOP_RATE = "toprate";
     public static final String NOW_PLAYING = "nowplaying";
     public static final String UPCOMING = "upcoming";
+    public static final String GENRES = "genre";
 
     private Constants() {
     }

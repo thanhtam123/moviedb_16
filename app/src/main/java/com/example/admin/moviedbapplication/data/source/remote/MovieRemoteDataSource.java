@@ -38,6 +38,6 @@ public class MovieRemoteDataSource implements MovieDataSource {
     public void getMovies(Genre genre, Callback<List<Movie>> callback, int page) {
         String url = API.BASE_URL + API.DISCOVER + API.MOVIE + API.API_KEY +
                 BuildConfig.ApiKey + API.GENRES + genre.getId() + API.PAGE + page;
-        new GenreRemoteAsyntask(callback).execute(url);
+        new MovieByGenreRemoteAsyntask(callback).execute(url);
     }
 }

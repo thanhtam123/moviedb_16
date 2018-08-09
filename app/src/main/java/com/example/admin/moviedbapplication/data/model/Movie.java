@@ -296,5 +296,8 @@ public class Movie {
         String ADULT = "adult";
         String OVERVIEW = "overview";
         String RELEASE_DATE = "release_date";
+        String GENRES = "genres";
+        String ID_GENRE = "id";
+        String NAME_GENRE = "name";
     }
 }

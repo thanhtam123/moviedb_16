@@ -15,12 +15,12 @@ import java.util.List;
  * Created by TamTT on 8/7/2018.
  */
 
-public class GenreRemoteAsyntask extends AsyncTask<String, Void, List<Movie>> {
+public class MovieByGenreRemoteAsyntask extends AsyncTask<String, Void, List<Movie>> {
     private Callback<List<Movie>> mCallback;
 
     private Exception mException;
 
-    public GenreRemoteAsyntask(Callback<List<Movie>> callback) {
+    public MovieByGenreRemoteAsyntask(Callback<List<Movie>> callback) {
         mCallback = callback;
     }
 
