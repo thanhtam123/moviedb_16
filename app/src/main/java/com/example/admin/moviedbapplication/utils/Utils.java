@@ -1,5 +1,6 @@
 package com.example.admin.moviedbapplication.utils;
 
+import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 
 import org.json.JSONArray;
@@ -60,5 +61,17 @@ public class Utils {
             movies.add(movie);
         }
         return movies;
+    }
+    public static List<Genre> parseJsonIntoGenre(String json) throws JSONException {
+        ArrayList<Genre> genreArrayList = new ArrayList<>();
+        JSONObject root = new JSONObject(json);
+        JSONArray dataArray = root.getJSONArray(Movie.JsonKey.GENRES);
+        for (int i = 0; i < dataArray.length(); i++) {
+            JSONObject object = dataArray.getJSONObject(i);
+            String id = object.getString(Movie.JsonKey.ID_GENRE);
+            String name = object.getString(Movie.JsonKey.NAME_GENRE);
+            genreArrayList.add(new Genre(id,name));
+        }
+        return genreArrayList;
     }
 }
