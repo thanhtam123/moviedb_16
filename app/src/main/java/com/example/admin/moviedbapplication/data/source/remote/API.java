@@ -13,4 +13,6 @@ public interface API {
     String DISCOVER = "/discover";
     String GENRES = "&with_genres=";
     String GENRE_LIST = "/genre/list";
+    String SEARCH = "/search";
+    String QUERY = "&query=";
 }

@@ -39,8 +39,18 @@ public class MovieRepository implements MovieDataSource{
     }
 
     @Override
-    public void getMovies(Genre genre, Callback<List<Movie>> callback, int page) {
-        mRemoteDataSource.getMovies(genre, callback, page);
+    public void getMovies(Genre genre, int page, Callback<List<Movie>> callback) {
+        mRemoteDataSource.getMovies(genre, page, callback);
+    }
+
+    @Override
+    public void getMovies(int page, Callback<List<Movie>> callback) {
+        mRemoteDataSource.getMovies(page, callback);
+    }
+
+    @Override
+    public void searchMoviesByName(int page, String name, Callback<List<Movie>> callback) {
+        mRemoteDataSource.searchMoviesByName(page, name, callback);
     }
 
 }

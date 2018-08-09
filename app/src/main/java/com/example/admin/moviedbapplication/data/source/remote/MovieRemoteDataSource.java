@@ -35,9 +35,22 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
-    public void getMovies(Genre genre, Callback<List<Movie>> callback, int page) {
+    public void getMovies(Genre genre, int page, Callback<List<Movie>> callback) {
         String url = API.BASE_URL + API.DISCOVER + API.MOVIE + API.API_KEY +
                 BuildConfig.ApiKey + API.GENRES + genre.getId() + API.PAGE + page;
+        new MovieByGenreRemoteAsyntask(callback).execute(url);
+    }
+
+    @Override
+    public void getMovies(int page, Callback<List<Movie>> callback) {
+        /*String url = API.BASE_URL + API.DISCOVER + API.MOVIE + API.API_KEY +
+                BuildConfig.ApiKey + API.GENRES + genre.getId() + API.PAGE + page;*/
+    }
+
+    @Override
+    public void searchMoviesByName(int page, String name, Callback<List<Movie>> callback) {
+        String url = API.BASE_URL + API.SEARCH + API.MOVIE + API.API_KEY +
+                BuildConfig.ApiKey + API.QUERY + name;
         new MovieByGenreRemoteAsyntask(callback).execute(url);
     }
 }

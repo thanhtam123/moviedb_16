@@ -25,5 +25,9 @@ public interface MovieDataSource {
      * @param genre
      * @param callback
      */
-    void getMovies(Genre genre, Callback<List<Movie>> callback, int page);
+    void getMovies(Genre genre, int page, Callback<List<Movie>> callback);
+
+    void getMovies(int page, Callback<List<Movie>> callback);
+
+    void searchMoviesByName(int page, String name, Callback<List<Movie>> callback);
 }

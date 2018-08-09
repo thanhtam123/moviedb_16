@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.admin.moviedbapplication.R;
+import com.example.admin.moviedbapplication.screen.search.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,14 +51,12 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home, menu);
-        return true;
+        return false;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_search) {
         }
         return super.onOptionsItemSelected(item);
     }
@@ -80,6 +79,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_favorites:
                 break;
             case R.id.nav_search:
+                fragment = new SearchFragment();
                 break;
             case R.id.nav_infor:
                 break;
