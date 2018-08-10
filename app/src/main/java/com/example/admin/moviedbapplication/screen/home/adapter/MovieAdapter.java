@@ -77,7 +77,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             mContext = context;
             mTextViewMovieName = view.findViewById(R.id.text_item_name_movie);
             mImageViewPoster = view.findViewById(R.id.image_item_main_movie);
-            mRatingBar = view.findViewById(R.id.rating_item_movie);
+            mRatingBar = view.findViewById(R.id.rating_item_movie_search);
             view.setOnClickListener(this);
         }
 

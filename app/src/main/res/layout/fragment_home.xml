@@ -15,8 +15,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_categery"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_0dp"
-        android:layout_marginBottom="@dimen/margin_0dp"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginBottom="@dimen/dp_0"
         android:background="@color/color_tolopea_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
