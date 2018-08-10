@@ -6,8 +6,6 @@
         <item name="colorPrimary">@color/color_tolopea_primary</item>
         <item name="colorPrimaryDark">@color/color_black_russian_primary_dark</item>
         <item name="colorAccent">@color/color_jacarta_accent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>

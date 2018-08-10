@@ -15,4 +15,5 @@ public interface API {
     String GENRE_LIST = "/genre/list";
     String SEARCH = "/search";
     String QUERY = "&query=";
+    String VIDEO = "/videos";
 }

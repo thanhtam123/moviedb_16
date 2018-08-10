@@ -77,6 +77,8 @@ public class HomeFragment extends Fragment implements
                         LinearLayoutManager.HORIZONTAL, false));
         recyclerGenre.setAdapter(adapter);
         adapter.updateData(genres);
+        progressDialog.dismiss();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
@@ -107,6 +109,5 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void onGenreClick(Genre genre) {
-
     }
 }

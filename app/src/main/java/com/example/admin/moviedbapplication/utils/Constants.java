@@ -15,6 +15,7 @@ public class Constants {
     public static final String UPCOMING = "upcoming";
     public static final String GENRES = "genre";
     public static final double VOTE = 0.5;
+    public static final String EXTRA_MOVIE = "EXTRA_MOVIE";
 
     private Constants() {
     }

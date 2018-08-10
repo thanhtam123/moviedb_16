@@ -53,4 +53,11 @@ public class MovieRemoteDataSource implements MovieDataSource {
                 BuildConfig.ApiKey + API.QUERY + name;
         new MovieByGenreRemoteAsyntask(callback).execute(url);
     }
+
+    @Override
+    public void getMovie(String id, Callback<Movie> callback) {
+        String url = API.BASE_URL + API.MOVIE + API.SLASH + id + API.API_KEY
+                + BuildConfig.ApiKey;
+        new SingleMovieRemoteAsyntask(callback).execute(url);
+    }
 }
