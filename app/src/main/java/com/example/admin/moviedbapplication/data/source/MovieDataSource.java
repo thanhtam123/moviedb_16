@@ -30,4 +30,6 @@ public interface MovieDataSource {
     void getMovies(int page, Callback<List<Movie>> callback);
 
     void searchMoviesByName(int page, String name, Callback<List<Movie>> callback);
+
+    void getMovie(String id, Callback<Movie> callback);
 }
