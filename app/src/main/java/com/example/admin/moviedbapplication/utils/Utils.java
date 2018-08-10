@@ -74,4 +74,8 @@ public class Utils {
         }
         return genreArrayList;
     }
+    public static Movie parseJsonIntoMovie(String json) throws JSONException {
+        JSONObject root = new JSONObject(json);
+        return new Movie(root);
+    }
 }

@@ -13,6 +13,14 @@
     <string name="nav_rating">Rating</string>
     <string name="nav_about_app">Application</string>
     <string name="text_loading">Loading...</string>
+    <string name="overview">As Scott Lang awaits expiration of his term of house detention,
+        Hope van Dyne and Dr. Hank Pym involve him in a scheme to rescue Mrs. van Dyne from
+        the micro-universe into which she has fallen, while two groups of schemers converge
+        on them with intentions of stealing Dr. Pym\'s inventions.</string>
+    <string name="like">Like</string>
+    <string name="about_actors">Cast</string>
+    <string name="time">180</string>
+    <string name="title_trailer">Trailer: </string>
     <string-array name="genres">
         <item>28_Action</item>
         <item>12_Adventure</item>
