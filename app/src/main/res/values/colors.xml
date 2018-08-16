@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_tolopea_primary">#1a0042</color>
-    <color name="color_black_russian_primary_dark">#00001e</color>
-    <color name="color_jacarta_accent">#46286e</color>
+    <color name="color_tolopea_primary">#141a32</color>
+    <color name="color_black_russian_primary_dark">#000a12</color>
+    <color name="color_jacarta_accent">#1e2748</color>
     <color name="color_orange_peel_star">#ff9800</color>
     <color name="color_white_text">#ffffff</color>
-
+    <color name="semiTransparentWhite">#40FFFFFF</color>
+    <color name="color_item">#1e2748</color>
 </resources>

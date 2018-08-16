@@ -10,14 +10,13 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_100"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="@dimen/magin_top_item_infor"
         android:background="@color/color_item">
 
         <TextView
-            android:id="@+id/text_item_movie_title_search"
+            android:id="@+id/text_item_movie_title_genre"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/text_item_movie_title_search"
             android:layout_marginEnd="@dimen/dp_8"
@@ -31,11 +30,11 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/rating_item_movie_search"
+            app:layout_constraintStart_toStartOf="@+id/rating_item_movie_genre"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RatingBar
-            android:id="@+id/rating_item_movie_search"
+            android:id="@+id/rating_item_movie_genre"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/rating_search_item"
@@ -51,13 +50,13 @@
             android:stepSize="0.1"
             android:transformPivotX="@dimen/item_movie_rating_bar_transform_pivot_x"
             android:transformPivotY="@dimen/item_movie_rating_bar_transform_pivot_y"
-            app:layout_constraintBottom_toTopOf="@+id/text_overview_search"
+            app:layout_constraintBottom_toTopOf="@+id/text_overview_genre"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_item_movie_title_search" />
+            app:layout_constraintTop_toBottomOf="@+id/text_item_movie_title_genre" />
 
         <TextView
-            android:id="@+id/text_overview_search"
-            android:layout_width="0dp"
+            android:id="@+id/text_overview_genre"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
@@ -67,12 +66,11 @@
             android:textSize="@dimen/text_overview_genre"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/rating_item_movie_search" />
-
+            app:layout_constraintStart_toStartOf="@+id/rating_item_movie_genre" />
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/image_item_movie_poster"
+        android:id="@+id/image_item_movie_poster_genre"
         android:layout_width="@dimen/item_genre_image_width"
         android:layout_height="@dimen/image_height_item_genre"
         android:layout_alignParentStart="true"
