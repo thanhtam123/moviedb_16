@@ -15,15 +15,13 @@ import java.util.ArrayList;
 public interface HomeContract {
     interface View {
 
-        void showCategory(ArrayList<Category> tasks);
+        void showCategory(ArrayList<Category> tasks, ArrayList<Genre> genres);
 
         void showLoadDataMainFail(Exception e);
 
-        void showGenres(ArrayList<Genre> genres);
-
-        void showBanner(ArrayList<Movie> movies);
-
         void showLoadingAnimation();
+
+        boolean idActive();
 
     }
 

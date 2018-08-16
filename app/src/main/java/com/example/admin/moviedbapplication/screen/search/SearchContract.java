@@ -14,11 +14,13 @@ public interface SearchContract {
 
         void showListPopularMovie(ArrayList<Movie> movies);
 
-        void updateListSearch(ArrayList<Movie> movies);
+        void updateListSearch(ArrayList<Movie> movies, int page);
 
         void showListMovieLoadFail(Exception e);
 
         void showAnimationLoading();
+
+        boolean isActive();
 
     }
     interface Presenter{

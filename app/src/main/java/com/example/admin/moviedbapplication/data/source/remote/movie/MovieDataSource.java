@@ -1,10 +1,12 @@
-package com.example.admin.moviedbapplication.data.source;
+package com.example.admin.moviedbapplication.data.source.remote.movie;
 
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
+import com.example.admin.moviedbapplication.data.source.Callback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,4 +34,8 @@ public interface MovieDataSource {
     void searchMoviesByName(int page, String name, Callback<List<Movie>> callback);
 
     void getMovie(String id, Callback<Movie> callback);
+
+    void getListFavoritesMovie(ArrayList<String> arrayId, Callback<List<Movie>> callback);
+
+    void getMovieByActor(String actorId, Callback<List<Movie>> callback);
 }

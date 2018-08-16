@@ -1,6 +1,7 @@
 package com.example.admin.moviedbapplication.screen.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.screen.detail.DetailActivity;
+import com.example.admin.moviedbapplication.screen.genre.GenresActivity;
+import com.example.admin.moviedbapplication.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -87,10 +91,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MovieR
 
         @Override
         public void onMovieClick(Movie movie) {
+            Intent intent = new Intent(mContext, DetailActivity.class);
+            intent.putExtra(Constants.EXTRA_MOVIE, movie);
+            mContext.startActivity(intent);
         }
 
-        @Override
+         @Override
         public void onClick(View view) {
+            Intent intent = new Intent(mContext, GenresActivity.class);
+            intent.putExtra(Constants.EXTRA_TYPE, mCategory);
+            mContext.startActivity(intent);
         }
     }
 }

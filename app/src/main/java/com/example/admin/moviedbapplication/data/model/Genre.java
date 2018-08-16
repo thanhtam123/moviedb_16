@@ -36,4 +36,5 @@ public class Genre {
                 ", mGenreName='" + mGenreName + '\'' +
                 '}';
     }
+
 }

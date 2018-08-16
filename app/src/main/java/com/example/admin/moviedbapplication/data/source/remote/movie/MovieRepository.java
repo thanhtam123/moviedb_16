@@ -1,4 +1,4 @@
-package com.example.admin.moviedbapplication.data.source;
+package com.example.admin.moviedbapplication.data.source.remote.movie;
 
 import android.support.annotation.NonNull;
 
@@ -6,17 +6,20 @@ import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
+import com.example.admin.moviedbapplication.data.source.Callback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by TamTT on 8/6/2018.
  */
 
-public class MovieRepository implements MovieDataSource{
+public class MovieRepository implements MovieDataSource {
     private static MovieRepository sInstance;
     @NonNull
     private MovieDataSource mRemoteDataSource;
+
 
     private MovieRepository() {
     }
@@ -56,5 +59,15 @@ public class MovieRepository implements MovieDataSource{
     @Override
     public void getMovie(String id, Callback<Movie> callback) {
         mRemoteDataSource.getMovie(id, callback);
+    }
+
+    @Override
+    public void getListFavoritesMovie(ArrayList<String> arrayId, Callback<List<Movie>> callback) {
+        mRemoteDataSource.getListFavoritesMovie(arrayId,callback);
+    }
+
+    @Override
+    public void getMovieByActor(String actorId, Callback<List<Movie>> callback) {
+        mRemoteDataSource.getMovieByActor(actorId, callback);
     }
 }

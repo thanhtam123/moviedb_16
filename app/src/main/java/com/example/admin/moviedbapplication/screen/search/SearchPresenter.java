@@ -3,8 +3,8 @@ package com.example.admin.moviedbapplication.screen.search;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.source.Callback;
-import com.example.admin.moviedbapplication.data.source.MovieRepository;
-import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRemoteDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +24,20 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void loadSearchMovie(int page, String name) {
+    public void loadSearchMovie(final int page, String name) {
         mMovieRepository.searchMoviesByName(page, name, new Callback<List<Movie>>() {
             @Override
             public void onGetDataSuccess(List<Movie> data) {
-                mViewSearch.updateListSearch(new ArrayList<>(data));
+                if(mViewSearch.isActive()){
+                    mViewSearch.updateListSearch(new ArrayList<>(data), page);
+                }
             }
 
             @Override
             public void onGetDataFailure(Exception e) {
-                mViewSearch.showListMovieLoadFail(e);
+                if(mViewSearch.isActive()){
+                    mViewSearch.showListMovieLoadFail(e);
+                }
             }
         });
     }
@@ -43,12 +47,16 @@ public class SearchPresenter implements SearchContract.Presenter {
         mMovieRepository.getMovies(type, page, new Callback<Category>() {
             @Override
             public void onGetDataSuccess(Category data) {
-                mViewSearch.showListPopularMovie(data.getCategoryMovie());
+                if(mViewSearch.isActive()){
+                    mViewSearch.showListPopularMovie(data.getCategoryMovie());
+                }
             }
 
             @Override
             public void onGetDataFailure(Exception e) {
-                mViewSearch.showListMovieLoadFail(e);
+                if(mViewSearch.isActive()){
+                    mViewSearch.showListMovieLoadFail(e);
+                }
             }
         });
     }

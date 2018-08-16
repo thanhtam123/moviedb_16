@@ -8,9 +8,9 @@ import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
 import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.data.source.GenreRepository;
-import com.example.admin.moviedbapplication.data.source.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
 import com.example.admin.moviedbapplication.data.source.remote.GenreRemoteDataSource;
-import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.utils.Constants;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class HomePresenter implements HomeContract.Presenter {
     private MovieRepository mMovieRepository;
     private GenreRepository mGenreRepository;
     private HomeContract.View mViewHome;
-    private Category mCategoryPopular, mCategoryToprate, mCategoryUpcoming, mCategoryNowPlaying;
-    private ArrayList<Genre> mGenres;
+    public Category mCategoryPopular, mCategoryToprate, mCategoryUpcoming, mCategoryNowPlaying;
+    public ArrayList<Genre> mGenres;
 
     public HomePresenter(HomeContract.View viewHome) {
         mViewHome = viewHome;
@@ -66,6 +66,7 @@ public class HomePresenter implements HomeContract.Presenter {
             public void onGetDataSuccess(Category data) {
                 mCategoryUpcoming = data;
                 mOnListenLoadingComplete.loadDone(Constants.UPCOMING, data, null);
+
             }
 
             @Override
@@ -113,8 +114,9 @@ public class HomePresenter implements HomeContract.Presenter {
                 categories.add(mCategoryUpcoming);
                 categories.add(mCategoryPopular);
                 categories.add(mCategoryNowPlaying);
-                mViewHome.showCategory(categories);
-                mViewHome.showGenres(mGenres);
+                if(mViewHome.idActive()){
+                    mViewHome.showCategory(categories, mGenres);
+                }
             }
         }
 
@@ -135,7 +137,7 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onGetDataSuccess(ArrayList<Genre> data) {
                 mGenres = data;
-                mOnListenLoadingComplete.loadDone(Constants.GENRES, null,data);
+                mOnListenLoadingComplete.loadDone(Constants.GENRES, null, data);
             }
 
             @Override

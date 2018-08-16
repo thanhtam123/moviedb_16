@@ -1,4 +1,4 @@
-package com.example.admin.moviedbapplication.data.source.remote;
+package com.example.admin.moviedbapplication.data.source.remote.movie;
 
 import android.os.AsyncTask;
 

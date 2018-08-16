@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_190"
+        android:layout_marginTop="@dimen/dp_200"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/color_tolopea_primary"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
@@ -9,7 +10,6 @@
         android:id="@+id/recycler_genre"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recycler_genres_height"
-        android:background="@color/color_orange_peel_star"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         android:layout_marginBottom="@dimen/dp_0"
-        android:background="@color/color_tolopea_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recycler_genre" />

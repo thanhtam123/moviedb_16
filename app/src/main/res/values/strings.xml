@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="title_category">Pupular</string>
-    <string name="nav_genres">Genres</string>
+    <string name="nav_genres">Genres:</string>
     <string name="nav_search">Search</string>
     <string name="nav_favorites">Favorites</string>
     <string name="nav_home">Home</string>
@@ -32,7 +32,6 @@
     <string name="text_actor_job">Job: Actor</string>
     <string name="text_actor_department">Department: Acting</string>
     <string name="title_known_for">Known for:</string>
-    <string name="liked">LIKED</string>
     <string-array name="genres">
         <item>28_Action</item>
         <item>12_Adventure</item>

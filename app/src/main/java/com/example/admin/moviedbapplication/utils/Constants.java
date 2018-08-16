@@ -14,6 +14,7 @@ public class Constants {
     public static final String NOW_PLAYING = "nowplaying";
     public static final String UPCOMING = "upcoming";
     public static final String GENRES = "genre";
+    public static final String EXTRA_GENRE = "extra_genre";
     public static final double VOTE = 0.5;
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String KEY_MOVIE_ID = "key_movie_id";
@@ -27,4 +28,5 @@ public class Constants {
 
     private Constants() {
     }
+
 }

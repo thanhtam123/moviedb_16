@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by TamTT on 8/8/2018.
  */
 
-public class GenreRepository implements GenreDataSource{
+public class GenreRepository implements GenreDataSource {
     private static GenreRepository sInstance;
     @NonNull
     private GenreDataSource mGenreDataSource;
