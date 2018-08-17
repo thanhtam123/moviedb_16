@@ -1,7 +1,6 @@
 package com.example.admin.moviedbapplication.screen.search;
 
 import com.example.admin.moviedbapplication.data.model.Movie;
-import com.example.admin.moviedbapplication.data.model.MovieType;
 
 import java.util.ArrayList;
 
@@ -10,21 +9,19 @@ import java.util.ArrayList;
  */
 
 public interface SearchContract {
-    interface View{
+    interface View {
+        void onGetMovieSuccess(ArrayList<Movie> movies);
 
-        void showListPopularMovie(ArrayList<Movie> movies);
+        void onGetMoviesFailure(Exception e);
 
-        void updateListSearch(ArrayList<Movie> movies);
+        void showNoResult();
 
-        void showListMovieLoadFail(Exception e);
+        void clearData();
 
-        void showAnimationLoading();
-
+        void addLoadingIndicator();
     }
-    interface Presenter{
 
+    interface Presenter {
         void loadSearchMovie(int page, String name);
-
-        void loadRecommendMovies(@MovieType String type, int page);
     }
 }

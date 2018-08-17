@@ -1,152 +1,118 @@
 package com.example.admin.moviedbapplication.screen.home;
 
-import android.support.annotation.NonNull;
-
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
-import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
 import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.data.source.GenreRepository;
 import com.example.admin.moviedbapplication.data.source.MovieRepository;
 import com.example.admin.moviedbapplication.data.source.remote.GenreRemoteDataSource;
 import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
-import com.example.admin.moviedbapplication.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by TamTT on 8/7/2018.
  */
 
 public class HomePresenter implements HomeContract.Presenter {
+    /**
+     * load only one page
+     */
+    private static final int FIRST_PAGE = 1;
 
     private MovieRepository mMovieRepository;
     private GenreRepository mGenreRepository;
     private HomeContract.View mViewHome;
-    private Category mCategoryPopular, mCategoryToprate, mCategoryUpcoming, mCategoryNowPlaying;
-    private ArrayList<Genre> mGenres;
+    private List<Genre> mGenres;
+    private List<Category> mCategories;
+    private int mCountRunningAsyn;
 
     public HomePresenter(HomeContract.View viewHome) {
         mViewHome = viewHome;
         mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance());
         mGenreRepository = GenreRepository.getInstance(GenreRemoteDataSource.getInstance());
+        mCategories = new ArrayList<>();
+        mGenres = new ArrayList<>();
     }
 
-    @Override
-    public void loadCategories(int page) {
-        mMovieRepository.getMovies(MovieType.POPULAR, page, new Callback<Category>() {
+    /**
+     * get movie by type
+     *
+     * @param movieType
+     */
+    private void getMovies(@MovieType String movieType) {
+        mCountRunningAsyn++;
+        mMovieRepository.getMovies(movieType, FIRST_PAGE, new Callback<Category>() {
             @Override
             public void onGetDataSuccess(Category data) {
-                mCategoryPopular =  data;
-                mOnListenLoadingComplete.loadDone(Constants.POPULAR, data, null);
+                mCategories.add(data);
+                onLoadDataSuccess();
             }
 
             @Override
             public void onGetDataFailure(Exception e) {
-                mOnListenLoadingComplete.loadFail(e);
-            }
-        });
-
-        mMovieRepository.getMovies(MovieType.TOP_RATE, page, new Callback<Category>() {
-            @Override
-            public void onGetDataSuccess(Category data) {
-                mCategoryToprate = data;
-                mOnListenLoadingComplete.loadDone(Constants.TOP_RATE, data, null);
-            }
-
-            @Override
-            public void onGetDataFailure(Exception e) {
-                mOnListenLoadingComplete.loadFail(e);
-            }
-        });
-
-        mMovieRepository.getMovies(MovieType.UP_COMING, page, new Callback<Category>() {
-            @Override
-            public void onGetDataSuccess(Category data) {
-                mCategoryUpcoming = data;
-                mOnListenLoadingComplete.loadDone(Constants.UPCOMING, data, null);
-            }
-
-            @Override
-            public void onGetDataFailure(Exception e) {
-                mOnListenLoadingComplete.loadFail(e);
-            }
-        });
-
-        mMovieRepository.getMovies(MovieType.NOW_PLAYING, page, new Callback<Category>() {
-            @Override
-            public void onGetDataSuccess(Category data) {
-                mCategoryNowPlaying = data;
-                mOnListenLoadingComplete.loadDone(Constants.NOW_PLAYING, data, null);
-            }
-
-            @Override
-            public void onGetDataFailure(Exception e) {
-                mOnListenLoadingComplete.loadFail(e);
+                onLoadDataFailure(e);
             }
         });
     }
 
-    private OnListenLoadingComplete mOnListenLoadingComplete = new OnListenLoadingComplete() {
-        boolean popular = false;
-        boolean toprate = false;
-        boolean upcoming = false;
-        boolean nowplaying = false;
-        boolean genre = false;
-        @Override
-        public void loadDone(String asyncClassName, Category category, ArrayList<Genre> genres) {
-            if(asyncClassName.equals(Constants.POPULAR)) {
-                popular = true;
-            } else if(asyncClassName.equals(Constants.TOP_RATE)) {
-                toprate = true;
-            }else if(asyncClassName.equals(Constants.UPCOMING)) {
-                upcoming = true;
-            }else if(asyncClassName.equals(Constants.NOW_PLAYING)) {
-                nowplaying = true;
-            }else if(asyncClassName.equals(Constants.GENRES)){
-                genre = true;
-            }
-            if(popular && upcoming && toprate && nowplaying && genre) {
-                ArrayList<Category> categories = new ArrayList<>();
-                categories.add(mCategoryToprate);
-                categories.add(mCategoryUpcoming);
-                categories.add(mCategoryPopular);
-                categories.add(mCategoryNowPlaying);
-                mViewHome.showCategory(categories);
-                mViewHome.showGenres(mGenres);
-            }
-        }
+    /**
+     * Show all data if load movie and genre finished
+     */
+    private void onLoadDataSuccess() {
+        decreaseCount();
+        onFinishLoading();
+    }
 
-        @Override
-        public void loadFail(Exception e) {
-            mViewHome.showLoadDataMainFail(e);
+    /**
+     * Show error and show all data if load movie and genre finished
+     * @param e
+     */
+    private void onLoadDataFailure(Exception e) {
+        decreaseCount();
+        mViewHome.showLoadDataMainFail(e);
+        onFinishLoading();
+    }
+
+    /**
+     * decrease count when load asyntask finished loading
+     */
+    private void decreaseCount() {
+        mCountRunningAsyn--;
+    }
+
+    private void onFinishLoading() {
+        if (mCountRunningAsyn == 0) {
+            mViewHome.showCategory(mCategories);
+            mViewHome.showGenres(mGenres);
         }
-    };
+    }
 
     @Override
-    public void loadBanners() {
-
+    public void loadCategories() {
+        getMovies(MovieType.POPULAR);
+        getMovies(MovieType.TOP_RATE);
+        getMovies(MovieType.UP_COMING);
+        getMovies(MovieType.NOW_PLAYING);
     }
 
     @Override
     public void loadGenres() {
+        mCountRunningAsyn++;
         mGenreRepository.getGenres(new Callback<ArrayList<Genre>>() {
             @Override
             public void onGetDataSuccess(ArrayList<Genre> data) {
-                mGenres = data;
-                mOnListenLoadingComplete.loadDone(Constants.GENRES, null,data);
+                mGenres.addAll(data);
+                onLoadDataSuccess();
             }
 
             @Override
             public void onGetDataFailure(Exception e) {
-                mOnListenLoadingComplete.loadFail(e);
+                onLoadDataFailure(e);
             }
         });
     }
 
-    @Override
-    public void openMovieDetails(@NonNull Movie movie) {
-
-    }
 }

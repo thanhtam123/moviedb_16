@@ -27,7 +27,12 @@ public class GenreRemoteDataSource implements GenreDataSource {
 
     @Override
     public void getGenres(Callback<ArrayList<Genre>> callback) {
-        String url = API.BASE_URL + API.GENRE_LIST + API.API_KEY + BuildConfig.ApiKey;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(API.BASE_URL)
+                .append(API.GENRE_LIST)
+                .append(API.API_KEY)
+                .append(BuildConfig.ApiKey);
+        String url = stringBuilder.toString();
         new GenresRemoteAsyntask(callback).execute(url);
     }
 }

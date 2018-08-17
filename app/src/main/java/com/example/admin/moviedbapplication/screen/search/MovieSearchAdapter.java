@@ -25,31 +25,58 @@ import java.util.List;
  * Created by TamTT on 8/9/2018.
  */
 
-public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.MovieViewHolder> {
+public class MovieSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int VIEW_ITEM = 1;
+    private static final int VIEW_PROG = 0;
 
     private Context mContext;
     private OnItemMovieClickedListener mOnItemClickedListener;
-    private List<Movie> mMovies = new ArrayList<>();
+    private List mMovies = new ArrayList<>();
+    private LayoutInflater mLayoutInflater;
 
     void setOnItemClickedListener(OnItemMovieClickedListener onItemClickedListener) {
         mOnItemClickedListener = onItemClickedListener;
     }
 
     MovieSearchAdapter(Context context) {
-        this.mContext = context;
+        mContext = context;
+        mMovies = new ArrayList();
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
-    public MovieSearchAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(mContext).
-                inflate(R.layout.item_movie_search, viewGroup, false);
-        return new MovieSearchAdapter.MovieViewHolder(mContext, view, mOnItemClickedListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        if (viewType == VIEW_ITEM) {
+            View v = mLayoutInflater.inflate(R.layout.item_movie_search, viewGroup, false);
+            return new MovieViewHolder(mContext, v, mOnItemClickedListener);
+        }
+        View v = mLayoutInflater.inflate(R.layout.item_loading, viewGroup, false);
+        return new ProgressViewHolder(v);
+
+    }
+
+    public void setData(ArrayList<Movie> movies) {
+        if (movies == null) return;
+        mMovies.clear();
+        addData(movies);
+    }
+
+    public void addData(ArrayList<Movie> movies) {
+        mMovies.addAll(movies);
+        notifyDataSetChanged();
     }
 
     @Override
-    public void onBindViewHolder(MovieSearchAdapter.MovieViewHolder holder, final int i) {
-        holder.fillData(mMovies.get(i));
+    public int getItemViewType(int position) {
+        return mMovies.get(position) instanceof Movie ? VIEW_ITEM : VIEW_PROG;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int i) {
+        if (getItemViewType(i) == VIEW_ITEM) {
+            ((MovieSearchAdapter.MovieViewHolder) holder).fillData((Movie) mMovies.get(i));
+        }
     }
 
     @Override
@@ -57,17 +84,27 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
         return mMovies == null ? 0 : mMovies.size();
     }
 
-    void updateData(ArrayList<Movie> movies) {
-        if (movies == null) {
+    public void addLoadingIndicator() {
+        mMovies.add(VIEW_PROG);
+        notifyItemInserted(mMovies.size() - 1);
+    }
+
+    public void removeLoadingIndicator() {
+        int index = mMovies.indexOf(VIEW_PROG);
+        if (index == -1) {
             return;
         }
+        mMovies.remove(VIEW_PROG);
+        notifyItemRemoved(index);
+    }
+
+    public void clearData() {
         mMovies.clear();
-        mMovies.addAll(movies);
         notifyDataSetChanged();
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView mTextViewMovieName, mTextViewGenres;
+        private TextView mTextViewMovieName, mTextViewOverview;
         private ImageView mImageViewPoster;
         private RatingBar mRatingBar;
         private Movie mMovie;
@@ -82,15 +119,15 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
             mTextViewMovieName = view.findViewById(R.id.text_item_movie_title_search);
             mImageViewPoster = view.findViewById(R.id.image_item_movie_poster);
             mRatingBar = view.findViewById(R.id.rating_item_movie_search);
-            mTextViewGenres = view.findViewById(R.id.text_item_movie_genre_search);
+            mTextViewOverview = view.findViewById(R.id.text_overview_search);
             view.setOnClickListener(this);
         }
 
         @SuppressLint("CheckResult")
-        public void fillData(Movie movie) {
+        void fillData(Movie movie) {
             mMovie = movie;
             mTextViewMovieName.setText(movie.getTitle());
-            mTextViewGenres.setText(mContext.getResources().getString(R.string.app_name));
+            mTextViewOverview.setText(movie.getOverview());
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.mipmap.ic_placeholder)
                     .error(R.mipmap.ic_error_load_image);
@@ -104,6 +141,12 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
         @Override
         public void onClick(View view) {
             mOnItemMovieClickedListener.onMovieClick(mMovie);
+        }
+    }
+
+    static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        ProgressViewHolder(View view) {
+            super(view);
         }
     }
 }

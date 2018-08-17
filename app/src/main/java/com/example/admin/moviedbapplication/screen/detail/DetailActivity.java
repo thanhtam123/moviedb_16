@@ -1,6 +1,7 @@
 package com.example.admin.moviedbapplication.screen.detail;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import java.util.List;
 public class DetailActivity extends AppCompatActivity
         implements DetailContract.View, YouTubePlayer.OnInitializedListener,
         View.OnClickListener {
+    public static final String EXTRA_MOVIE = "EXTRA_MOVIE";
 
     private DetailContract.Presenter mDetailPresenter;
     private Movie mMovie;
@@ -47,12 +49,18 @@ public class DetailActivity extends AppCompatActivity
     private ImageView mImageMovieBackdrop;
     private List<Genre> mGenres;
 
+    public static Intent getMovieIntent(Context context, Movie movie) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(EXTRA_MOVIE, movie);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
         mDetailPresenter = new DetailPresenter(this);
-        mMovie = getIntent().getParcelableExtra(Constants.EXTRA_MOVIE);
+        mMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         mGenres = DataGenreClass.getListGenres(mMovie.getGenreIds());
         showMovie(mMovie);
     }
@@ -178,20 +186,9 @@ public class DetailActivity extends AppCompatActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_cast_detail:
-                Intent intent = new Intent(DetailActivity.this, ActorActivity.class);
-                intent.putExtra(Constants.EXTRA_MOVIE, mMovie);
-                startActivity(intent);
+
                 break;
             case R.id.button_like:
-                if(!mIsLike){
-                    mIds.add(mMovie.getId());
-                    mButtonLike.setText(getString(R.string.liked));
-                    mIsLike = true;
-                }else {
-                    mButtonLike.setText(getString(R.string.like));
-                    mIds.remove(mMovie.getId());
-                    mIsLike = false;
-                }
                 break;
         }
     }

@@ -2,6 +2,7 @@ package com.example.admin.moviedbapplication.screen.genre;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -35,11 +36,23 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
     private MovieGenreAdapter mAdapter;
     private GenreContract.Presenter mGenrePresenter;
     private RequestOptions mRequestOptions;
-    private Boolean mIsLoading;
+    private boolean mIsLoading;
     private int mPage = 1;
     private ProgressDialog mProgressDialog;
     private Category mCategory;
     private Genre mGenre;
+
+    public static Intent getCategoryIntent(Context context, Category category) {
+        Intent intent = new Intent(context, GenresActivity.class);
+        intent.putExtra(Constants.EXTRA_CATEGORY, category);
+        return intent;
+    }
+
+    public static Intent getGenreIntent(Context context, Genre genre) {
+        Intent intent = new Intent(context, GenresActivity.class);
+        intent.putExtra(Constants.EXTRA_GENRE, genre);
+        return intent;
+    }
 
     public GenresActivity() {
         mGenrePresenter = new GenrePresenter(this);
@@ -76,7 +89,8 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
     @Override
     public void showGenres(ArrayList<Movie> movies) {
         mMovieArrayList.addAll(movies);
-        if (mPage <= 2) {
+        mAdapter.removeLoadingIndicator();
+        if (mPage <= Constants.SECOND_PAGE) {
             mAdapter.notifyDataSetChanged();
             ImageView imageBackdrop = findViewById(R.id.image_backdrop_genre);
             Glide.with(this)
@@ -84,7 +98,6 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
                     .load(Constants.IMAGE_PATH + mMovieArrayList.get(0).getPosterPath())
                     .into(imageBackdrop);
         } else {
-            mAdapter.removeLoadingIndicator();
             mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(),
                     mMovieArrayList.size() - 1);
         }

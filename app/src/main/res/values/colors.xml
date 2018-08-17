@@ -7,4 +7,7 @@
     <color name="color_white_text">#ffffff</color>
     <color name="semiTransparentWhite">#40FFFFFF</color>
     <color name="color_item">#1e2748</color>
+    <color name="color_cyan">#00E5FF</color>
+    <color name="color_electric_violet">#6200EA</color>
+    <color name="color_denim">#1976D2</color>
 </resources>
