@@ -90,4 +90,17 @@ public class MovieRemoteDataSource implements MovieDataSource {
         String url = stringBuilder.toString();
         new SingleMovieRemoteAsyntask(callback).execute(url);
     }
+
+    @Override
+    public void getMovieByActor(String actorId, Callback<List<Movie>> callback) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(API.BASE_URL)
+                .append(API.CREDIT)
+                .append(API.SLASH)
+                .append(actorId)
+                .append(API.API_KEY)
+                .append(BuildConfig.ApiKey);
+        String url = stringBuilder.toString();
+        new MovieByActorRemoteAsyntask(callback).execute(url);
+    }
 }

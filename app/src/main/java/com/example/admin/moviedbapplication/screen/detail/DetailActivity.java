@@ -19,6 +19,7 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.Video;
+import com.example.admin.moviedbapplication.screen.actor.ActorActivity;
 import com.example.admin.moviedbapplication.utils.Constants;
 import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.google.android.youtube.player.YouTubeInitializationResult;

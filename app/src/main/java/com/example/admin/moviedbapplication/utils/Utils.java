@@ -5,8 +5,10 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.example.admin.moviedbapplication.R;
+import com.example.admin.moviedbapplication.data.model.Cast;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.model.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +69,7 @@ public class Utils {
         }
         return movies;
     }
+
     public static List<Genre> parseJsonIntoGenre(String json) throws JSONException {
         ArrayList<Genre> genreArrayList = new ArrayList<>();
         JSONObject root = new JSONObject(json);
@@ -75,16 +78,17 @@ public class Utils {
             JSONObject object = dataArray.getJSONObject(i);
             String id = object.getString(Movie.JsonKey.ID_GENRE);
             String name = object.getString(Movie.JsonKey.NAME_GENRE);
-            genreArrayList.add(new Genre(id,name));
+            genreArrayList.add(new Genre(id, name));
         }
         return genreArrayList;
     }
+
     public static Movie parseJsonIntoMovie(String json) throws JSONException {
         JSONObject root = new JSONObject(json);
         return new Movie(root);
     }
 
-    public static void initProgressDialog(Context context, ProgressDialog progressDialog){
+    public static void initProgressDialog(Context context, ProgressDialog progressDialog) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
@@ -94,7 +98,7 @@ public class Utils {
         Runnable progressRunnable = new Runnable() {
             @Override
             public void run() {
-                if(finalProgressDialog.isShowing())
+                if (finalProgressDialog.isShowing())
                     finalProgressDialog.cancel();
             }
         };
@@ -102,9 +106,41 @@ public class Utils {
         pdCanceller.postDelayed(progressRunnable, 2000);
     }
 
-    public static void dismissProgressDialog(ProgressDialog progressDialog){
-        if(progressDialog != null){
+    public static void dismissProgressDialog(ProgressDialog progressDialog) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
+    }
+
+    public static Video parseJsonIntoVideo(String json) throws JSONException {
+        JSONObject root = new JSONObject(json);
+        JSONArray dataArray = root.getJSONArray(Video.JsonVideoKey.RESULTS);
+        JSONObject videoObject = dataArray.getJSONObject(0);
+        return new Video(videoObject);
+    }
+
+    public static List<Cast> parseJsonIntoCasts(String json) throws JSONException {
+        JSONObject root = new JSONObject(json);
+        JSONArray dataArray = root.getJSONArray(Cast.ActorJsonKey.CAST);
+        List<Cast> casts = new ArrayList<>();
+        for (int i = 0; i < dataArray.length(); i++) {
+            JSONObject castJson = dataArray.getJSONObject(i);
+            Cast cast = new Cast(castJson);
+            casts.add(cast);
+        }
+        return casts;
+    }
+
+    public static List<Movie> parseJsonIntoMoviesByActor(String json) throws JSONException {
+        JSONObject root = new JSONObject(json);
+        JSONObject person = root.getJSONObject(Movie.JsonKey.PERSON);
+        JSONArray knownForArr = person.getJSONArray(Movie.JsonKey.KNOWN_FOR);
+        List<Movie> movies = new ArrayList<>();
+        for (int i = 0; i < knownForArr.length(); i++) {
+            JSONObject jsonObject = (JSONObject) knownForArr.get(i);
+            Movie movie = new Movie(jsonObject);
+            movies.add(movie);
+        }
+        return movies;
     }
 }

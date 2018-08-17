@@ -1,5 +1,8 @@
 package com.example.admin.moviedbapplication.data.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by TamTT on 8/10/2018.
  */
@@ -13,6 +16,16 @@ public class Cast {
     private String mName;
     private String mOrder;
     private String mProfilePath;
+
+    public Cast(JSONObject jsonObject) throws JSONException{
+        mCastId = jsonObject.getString(Cast.ActorJsonKey.CAST_ID);
+        mCharacter = jsonObject.getString(Cast.ActorJsonKey.CHARACTER);
+        mCreditId = jsonObject.getString(Cast.ActorJsonKey.CREDIT_ID);
+        mGender = jsonObject.getString(Cast.ActorJsonKey.GENDER);
+        mId = jsonObject.getString(Cast.ActorJsonKey.ID);
+        mName = jsonObject.getString(Cast.ActorJsonKey.NAME);
+        mProfilePath = jsonObject.getString(Cast.ActorJsonKey.PROFILE_PATH);
+    }
 
     public String getCastId() {
         return mCastId;
@@ -101,5 +114,6 @@ public class Cast {
         String NAME = "name";
         String ORDER = "order";
         String PROFILE_PATH = "profile_path";
+        String CAST = "cast";
     }
 }

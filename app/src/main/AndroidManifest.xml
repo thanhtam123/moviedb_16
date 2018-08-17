@@ -22,8 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SplashActivity" />
-        <activity android:name=".screen.detail.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".screen.detail.DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".screen.genre.GenresActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -38,8 +39,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".screen.detail.DetailActivity" />
         </activity>
-        <activity android:name=".screen.detail_actor.DetailActorActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+        <activity
+            android:name=".screen.detail_actor.DetailActorActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 
 </manifest>
