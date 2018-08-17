@@ -101,5 +101,6 @@ public class Cast {
         String NAME = "name";
         String ORDER = "order";
         String PROFILE_PATH = "profile_path";
+        String CAST = "cast";
     }
 }

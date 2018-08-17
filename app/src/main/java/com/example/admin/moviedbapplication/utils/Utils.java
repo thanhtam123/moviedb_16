@@ -1,7 +1,9 @@
 package com.example.admin.moviedbapplication.utils;
 
+import com.example.admin.moviedbapplication.data.model.Cast;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.model.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,5 +79,73 @@ public class Utils {
     public static Movie parseJsonIntoMovie(String json) throws JSONException {
         JSONObject root = new JSONObject(json);
         return new Movie(root);
+    }
+    public static Video parseJsonIntoVideo(String json) throws JSONException {
+        JSONObject root = new JSONObject(json);
+        JSONArray dataArray = root.getJSONArray(Video.JsonVideoKey.RESULTS);
+        JSONObject videoObject = dataArray.getJSONObject(0);
+        String id = videoObject.getString(Video.JsonVideoKey.ID);
+        String key = videoObject.getString(Video.JsonVideoKey.KEY);
+        return new Video(id, key);
+    }
+    public static List<Cast> parseJsonIntoCasts(String json) throws JSONException{
+        JSONObject root = new JSONObject(json);
+        JSONArray dataArray = root.getJSONArray(Cast.ActorJsonKey.CAST);
+        List<Cast> casts = new ArrayList<>();
+        for(int i = 0; i<dataArray.length(); i++){
+            JSONObject cast = dataArray.getJSONObject(i);
+            Cast castOb = new Cast();
+            castOb.setCastId(cast.getString(Cast.ActorJsonKey.CAST_ID));
+            castOb.setCharacter(cast.getString(Cast.ActorJsonKey.CHARACTER));
+            castOb.setCreditId( cast.getString(Cast.ActorJsonKey.CREDIT_ID));
+            castOb.setGender(cast.getString(Cast.ActorJsonKey.GENDER));
+            castOb.setId(cast.getString(Cast.ActorJsonKey.ID));
+            castOb.setName(cast.getString(Cast.ActorJsonKey.NAME));
+            castOb.setProfilePath(cast.getString(Cast.ActorJsonKey.PROFILE_PATH));
+            casts.add(castOb);
+        }
+        return casts;
+    }
+    public static List<Movie> parseJsonIntoMoviesByActor(String json) throws JSONException {
+        JSONObject root = new JSONObject(json);
+        JSONObject person = root.getJSONObject(Movie.JsonKey.PERSON);
+        JSONArray knownForArr = person.getJSONArray(Movie.JsonKey.KNOWN_FOR);
+        List<Movie> movies = new ArrayList<>();
+        for(int i=0; i<knownForArr.length(); i++){
+            JSONObject jsonObject = (JSONObject) knownForArr.get(i);
+
+            JSONArray genresArray = jsonObject.optJSONArray(Movie.JsonKey.GENRE_IDS);
+            int[] mGenreIds;
+            if(genresArray == null){
+                JSONArray genres = jsonObject.optJSONArray(Movie.JsonKey.GENRES);
+                mGenreIds = new int[genres.length()];
+                for (int j = 0; j < genres.length(); j++) {
+                    mGenreIds[j] = genres.getJSONObject(j).getInt(Movie.JsonKey.ID_GENRE);
+                }
+            }else {
+                mGenreIds = new int[genresArray.length()];
+                for (int j = 0; j < genresArray.length(); j++) {
+                    mGenreIds[j] = genresArray.optInt(j);
+                }
+            }
+
+            Movie movie = new Movie.Builder().setAdult(jsonObject.getBoolean(Movie.JsonKey.ADULT))
+                    .setBackdropPath(jsonObject.getString(Movie.JsonKey.BACKDROP_PATH))
+                    .setId(jsonObject.getString(Movie.JsonKey.ID))
+                    .setOriginalLanguage(jsonObject.getString(Movie.JsonKey.ORIGINAL_LANGUAGE))
+                    .setOriginalTitle(jsonObject.getString(Movie.JsonKey.ORIGINAL_TITLE))
+                    .setOverview(jsonObject.getString(Movie.JsonKey.OVERVIEW))
+                    .setPosterPath(jsonObject.getString(Movie.JsonKey.POSTER_PATH))
+                    .setRelaseDate(jsonObject.getString(Movie.JsonKey.RELEASE_DATE))
+                    .setTitle(jsonObject.getString(Movie.JsonKey.TITLE))
+                    .setGenreIds(mGenreIds)
+                    .setVideo(jsonObject.getBoolean(Movie.JsonKey.VIDEO))
+                    .setVoteAverage(jsonObject.getDouble(Movie.JsonKey.VOTE_AVERAGE))
+                    .setVoteCount(jsonObject.getInt(Movie.JsonKey.VOTE_COUNT))
+                    .setPopularity(jsonObject.getInt(Movie.JsonKey.POPULARITY)).create();
+
+            movies.add(movie);
+        }
+        return movies;
     }
 }

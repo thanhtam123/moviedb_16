@@ -18,6 +18,7 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.Video;
+import com.example.admin.moviedbapplication.screen.actor.ActorActivity;
 import com.example.admin.moviedbapplication.utils.Constants;
 import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -183,15 +184,7 @@ public class DetailActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.button_like:
-                if(!mIsLike){
-                    mIds.add(mMovie.getId());
-                    mButtonLike.setText(getString(R.string.liked));
-                    mIsLike = true;
-                }else {
-                    mButtonLike.setText(getString(R.string.like));
-                    mIds.remove(mMovie.getId());
-                    mIsLike = false;
-                }
+
                 break;
         }
     }

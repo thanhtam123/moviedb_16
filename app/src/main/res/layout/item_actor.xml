@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_actor_height"
+    android:layout_margin="@dimen/dp_4"
+    card_view:cardCornerRadius="@dimen/dp_4">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_item_actor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_marginStart="@dimen/dp_4"
+            android:scaleType="centerCrop"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.0"
+            card_view:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_item_actor_character"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_4"
+            android:background="@android:drawable/screen_background_dark_transparent"
+            android:gravity="center"
+            android:padding="@dimen/dp_4"
+            android:textColor="@color/color_white_text"
+            android:textSize="@dimen/text_size_actor_charactor"
+            android:textStyle="bold"
+            card_view:layout_constraintBottom_toTopOf="@+id/text_item_actor_name"
+            card_view:layout_constraintEnd_toEndOf="@+id/text_item_actor_name"
+            card_view:layout_constraintStart_toStartOf="@+id/text_item_actor_name" />
+
+        <TextView
+            android:id="@+id/text_item_actor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_marginStart="@dimen/dp_4"
+            android:background="@android:drawable/screen_background_dark_transparent"
+            android:gravity="center"
+            android:padding="@dimen/dp_4"
+            android:textColor="@color/color_white_text"
+            android:textSize="@dimen/text_size_actor_name"
+            android:textStyle="bold"
+            card_view:layout_constraintBottom_toBottomOf="@+id/image_item_actor"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

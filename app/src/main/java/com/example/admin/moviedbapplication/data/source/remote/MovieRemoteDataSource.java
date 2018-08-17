@@ -1,5 +1,7 @@
 package com.example.admin.moviedbapplication.data.source.remote;
 
+import android.util.Log;
+
 import com.example.admin.moviedbapplication.BuildConfig;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
@@ -59,5 +61,13 @@ public class MovieRemoteDataSource implements MovieDataSource {
         String url = API.BASE_URL + API.MOVIE + API.SLASH + id + API.API_KEY
                 + BuildConfig.ApiKey;
         new SingleMovieRemoteAsyntask(callback).execute(url);
+    }
+
+    @Override
+    public void getMovieByActor(String actorId, Callback<List<Movie>> callback) {
+        String url = API.BASE_URL + API.CREDIT + API.SLASH + actorId +
+                API.API_KEY + BuildConfig.ApiKey;
+        Log.e("TAG", url);
+        new MovieByActorRemoteAsyntask(callback).execute(url);
     }
 }
