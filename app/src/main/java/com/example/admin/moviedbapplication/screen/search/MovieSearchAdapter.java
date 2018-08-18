@@ -67,7 +67,7 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView mTextViewMovieName, mTextViewGenres;
+        private TextView mTextViewMovieName, mTextViewOverview;
         private ImageView mImageViewPoster;
         private RatingBar mRatingBar;
         private Movie mMovie;
@@ -82,7 +82,7 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
             mTextViewMovieName = view.findViewById(R.id.text_item_movie_title_search);
             mImageViewPoster = view.findViewById(R.id.image_item_movie_poster);
             mRatingBar = view.findViewById(R.id.rating_item_movie_search);
-            mTextViewGenres = view.findViewById(R.id.text_item_movie_genre_search);
+            mTextViewOverview  = view.findViewById(R.id.text_overview_search);
             view.setOnClickListener(this);
         }
 
@@ -90,7 +90,7 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
         public void fillData(Movie movie) {
             mMovie = movie;
             mTextViewMovieName.setText(movie.getTitle());
-            mTextViewGenres.setText(mContext.getResources().getString(R.string.app_name));
+            mTextViewOverview .setText(movie.getOverview());
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.mipmap.ic_placeholder)
                     .error(R.mipmap.ic_error_load_image);

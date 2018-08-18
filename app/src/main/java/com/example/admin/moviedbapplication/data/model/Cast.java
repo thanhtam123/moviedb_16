@@ -1,10 +1,13 @@
 package com.example.admin.moviedbapplication.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by TamTT on 8/10/2018.
  */
 
-public class Cast {
+public class Cast implements Parcelable{
     private String mCastId;
     private String mCharacter;
     private String mCreditId;
@@ -13,6 +16,32 @@ public class Cast {
     private String mName;
     private String mOrder;
     private String mProfilePath;
+
+    public Cast() {
+    }
+
+    protected Cast(Parcel in) {
+        mCastId = in.readString();
+        mCharacter = in.readString();
+        mCreditId = in.readString();
+        mGender = in.readString();
+        mId = in.readString();
+        mName = in.readString();
+        mOrder = in.readString();
+        mProfilePath = in.readString();
+    }
+
+    public static final Creator<Cast> CREATOR = new Creator<Cast>() {
+        @Override
+        public Cast createFromParcel(Parcel in) {
+            return new Cast(in);
+        }
+
+        @Override
+        public Cast[] newArray(int size) {
+            return new Cast[size];
+        }
+    };
 
     public String getCastId() {
         return mCastId;
@@ -90,6 +119,23 @@ public class Cast {
                 ", mOrder='" + mOrder + '\'' +
                 ", mProfilePath='" + mProfilePath + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mCastId);
+        parcel.writeString(mCharacter);
+        parcel.writeString(mCreditId);
+        parcel.writeString(mGender);
+        parcel.writeString(mId);
+        parcel.writeString(mName);
+        parcel.writeString(mOrder);
+        parcel.writeString(mProfilePath);
     }
 
     public interface ActorJsonKey{

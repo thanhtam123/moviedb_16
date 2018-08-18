@@ -1,5 +1,10 @@
 package com.example.admin.moviedbapplication.utils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Handler;
+
+import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Cast;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
@@ -147,5 +152,28 @@ public class Utils {
             movies.add(movie);
         }
         return movies;
+    }
+
+    public static void initProgressDialog(Context context, ProgressDialog progressDialog){
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(context.getString(R.string.text_loading));
+        progressDialog.show();
+        final ProgressDialog finalProgressDialog = progressDialog;
+        Runnable progressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if(finalProgressDialog.isShowing())
+                    finalProgressDialog.cancel();
+            }
+        };
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 2000);
+    }
+    public static void dismissProgressDialog(ProgressDialog progressDialog){
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 }

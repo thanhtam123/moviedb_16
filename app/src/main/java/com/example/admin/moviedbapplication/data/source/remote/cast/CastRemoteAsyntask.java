@@ -1,8 +1,8 @@
-package com.example.admin.moviedbapplication.data.source.remote;
+package com.example.admin.moviedbapplication.data.source.remote.cast;
 
 import android.os.AsyncTask;
 
-import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.model.Cast;
 import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.utils.Utils;
 
@@ -15,20 +15,20 @@ import java.util.List;
  * Created by TamTT on 8/15/2018.
  */
 
-public class MovieByActorRemoteAsyntask extends AsyncTask<String, Void, List<Movie>> {
+public class CastRemoteAsyntask extends AsyncTask<String, Void, List<Cast>> {
 
-    private Callback<List<Movie>> mCallback;
+    private Callback<List<Cast>> mCallback;
     private Exception mException;
 
-    public MovieByActorRemoteAsyntask( Callback<List<Movie>> callback) {
+    public CastRemoteAsyntask(Callback<List<Cast>> callback) {
         mCallback = callback;
     }
 
     @Override
-    protected List<Movie> doInBackground(String... strings) {
+    protected List<Cast> doInBackground(String... strings) {
         try {
             String json = Utils.getJSONStringFromURL(strings[0]);
-            return Utils.parseJsonIntoMoviesByActor(json);
+            return Utils.parseJsonIntoCasts(json);
         } catch (IOException e) {
             e.printStackTrace();
             mException = e;
@@ -40,13 +40,13 @@ public class MovieByActorRemoteAsyntask extends AsyncTask<String, Void, List<Mov
     }
 
     @Override
-    protected void onPostExecute(List<Movie> movies) {
-        super.onPostExecute(movies);
+    protected void onPostExecute(List<Cast> casts) {
+        super.onPostExecute(casts);
         if (mCallback == null) {
             return;
         }
         if (mException == null) {
-            mCallback.onGetDataSuccess(movies);
+            mCallback.onGetDataSuccess(casts);
         } else {
             mCallback.onGetDataFailure(mException);
         }

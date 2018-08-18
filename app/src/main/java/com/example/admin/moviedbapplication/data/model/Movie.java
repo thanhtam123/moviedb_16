@@ -1,5 +1,8 @@
 package com.example.admin.moviedbapplication.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +13,7 @@ import java.util.Arrays;
  * Created by TamTT on 8/6/2018.
  */
 
-public class Movie {
+public class Movie implements Parcelable{
     private int mVoteCount;
     private String mId;
     private boolean mVideo;
@@ -63,6 +66,35 @@ public class Movie {
             mGenreIds[j] = genresArray.optInt(j);
         }
     }
+
+    protected Movie(Parcel in) {
+        mVoteCount = in.readInt();
+        mId = in.readString();
+        mVideo = in.readByte() != 0;
+        mVoteAverage = in.readDouble();
+        mTitle = in.readString();
+        mPopularity = in.readDouble();
+        mPosterPath = in.readString();
+        mOriginalLanguage = in.readString();
+        mOriginalTitle = in.readString();
+        mGenreIds = in.createIntArray();
+        mBackdropPath = in.readString();
+        mAdult = in.readByte() != 0;
+        mOverview = in.readString();
+        mReleaseDate = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public int getVoteCount() {
         return mVoteCount;
@@ -189,6 +221,29 @@ public class Movie {
                 '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mVoteCount);
+        parcel.writeString(mId);
+        parcel.writeByte((byte) (mVideo ? 1 : 0));
+        parcel.writeDouble(mVoteAverage);
+        parcel.writeString(mTitle);
+        parcel.writeDouble(mPopularity);
+        parcel.writeString(mPosterPath);
+        parcel.writeString(mOriginalLanguage);
+        parcel.writeString(mOriginalTitle);
+        parcel.writeIntArray(mGenreIds);
+        parcel.writeString(mBackdropPath);
+        parcel.writeByte((byte) (mAdult ? 1 : 0));
+        parcel.writeString(mOverview);
+        parcel.writeString(mReleaseDate);
+    }
+
     public static class Builder {
         private int mVoteCount;
         private String mId;
@@ -299,5 +354,7 @@ public class Movie {
         String GENRES = "genres";
         String ID_GENRE = "id";
         String NAME_GENRE = "name";
+        String PERSON = "person";
+        String KNOWN_FOR = "known_for";
     }
 }

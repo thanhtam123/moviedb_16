@@ -52,8 +52,8 @@ public class DetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
-        mDetailPresenter = new DetailPresenter(this);
         mMovie = getIntent().getParcelableExtra(Constants.EXTRA_MOVIE);
+        mDetailPresenter = new DetailPresenter(this);
         mGenres = DataGenreClass.getListGenres(mMovie.getGenreIds());
         showMovie(mMovie);
     }
@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity
         mTextMovieName.setText(movie.getTitle());
         mTextTime.setText(movie.getReleaseDate());
         mTextGenreName.setText(DataGenreClass.getGenreString(new ArrayList<>(mGenres)));
-        mRatingBar.setRating((float) movie.getPopularity());
+        mRatingBar.setRating((float) movie.getVoteAverage());
         mTextOverview.setText(movie.getOverview());
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.mipmap.ic_placeholder)
