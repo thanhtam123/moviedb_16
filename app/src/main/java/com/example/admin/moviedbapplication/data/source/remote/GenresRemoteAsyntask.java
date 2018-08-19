@@ -43,11 +43,11 @@ public class GenresRemoteAsyntask extends AsyncTask<String, Void, List<Genre>> {
     @Override
     protected void onPostExecute(List<Genre> genres) {
         super.onPostExecute(genres);
-        DataGenreClass.setData(new ArrayList<>(genres));
         if (mCallback == null) {
             return;
         }
         if (mException == null) {
+            DataGenreClass.setData(new ArrayList<>(genres));
             mCallback.onGetDataSuccess(new ArrayList<>(genres));
         } else {
             mCallback.onGetDataFailure(mException);

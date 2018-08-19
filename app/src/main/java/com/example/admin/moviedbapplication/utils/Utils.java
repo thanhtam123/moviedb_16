@@ -169,7 +169,7 @@ public class Utils {
             }
         };
         Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 2000);
+        pdCanceller.postDelayed(progressRunnable, 4000);
     }
     public static void dismissProgressDialog(ProgressDialog progressDialog){
         if(progressDialog != null){

@@ -25,6 +25,9 @@ public class Constants {
     public static final String EXTRA_ACTOR = "EXTRA_ACTOR";
     public static final String KEY_MOVIE = "key_movie";
     public static final String EXTRA_GENRE = "extra_genre";
+    public static final String KEY_LIST_CATEGORY = "key_list_category";
+    public static final String KEY_LIST_GENRE = "key_list_genre";
+
 
     private Constants() {
     }

@@ -1,6 +1,7 @@
 package com.example.admin.moviedbapplication.screen.actor;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Cast;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.screen.actor_detail.DetailActorActivity;
 import com.example.admin.moviedbapplication.utils.Constants;
 import com.example.admin.moviedbapplication.utils.Utils;
 
@@ -77,8 +79,8 @@ public class ActorActivity extends AppCompatActivity
 
     @Override
     public void onActorClick(Cast cast) {
-        /*Intent intent = new Intent(ActorActivity.this, DetailActorActivity.class);
+        Intent intent = new Intent(ActorActivity.this, DetailActorActivity.class);
         intent.putExtra(Constants.EXTRA_ACTOR, cast);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 }

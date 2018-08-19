@@ -1,6 +1,7 @@
 package com.example.admin.moviedbapplication.screen.home;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,14 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.screen.genre.GenresActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.CategoryAdapter;
 import com.example.admin.moviedbapplication.screen.home.adapter.GenresAdapter;
 import com.example.admin.moviedbapplication.screen.home.adapter.OnGenreItemClickListener;
+import com.example.admin.moviedbapplication.utils.Constants;
+import com.example.admin.moviedbapplication.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -30,13 +35,38 @@ public class HomeFragment extends Fragment implements
         HomeContract.View, OnGenreItemClickListener {
 
     private HomePresenter mPresenter;
-    private RecyclerView recyclerCategory,recyclerGenre;
+    private RecyclerView recyclerCategory, recyclerGenre;
     private ProgressDialog progressDialog;
     private CategoryAdapter adapter;
-    private int page;
+    private ArrayList<Category> mCategories;
+    private ArrayList<Genre> mGenres;
+    private ProgressDialog mProgressDialog;
 
     public HomeFragment() {
         mPresenter = new HomePresenter(this);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        if(savedInstanceState != null){
+            mCategories = savedInstanceState.getParcelableArrayList(Constants.KEY_LIST_CATEGORY);
+            mGenres = savedInstanceState.getParcelableArrayList(Constants.KEY_LIST_GENRE);
+            showCategory(mCategories);
+            showGenres(mGenres);
+        }else {
+            mPresenter.loadGenres();
+            mPresenter.loadCategories(1);
+            Utils.initProgressDialog(getActivity(), mProgressDialog);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Constants.KEY_LIST_CATEGORY, mCategories);
+        outState.putParcelableArrayList(Constants.KEY_LIST_GENRE, mGenres);
     }
 
     @Nullable
@@ -58,14 +88,13 @@ public class HomeFragment extends Fragment implements
                         LinearLayoutManager.VERTICAL, false));
         recyclerCategory.setAdapter(adapter);
         adapter.updateData(categories);
-        progressDialog.dismiss();
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        Utils.dismissProgressDialog(mProgressDialog);
     }
 
     @Override
     public void showLoadDataMainFail(Exception e) {
-        progressDialog.dismiss();
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        Utils.dismissProgressDialog(mProgressDialog);
+        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -86,7 +115,7 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void showLoadingAnimation() {
-        progressDialog = new ProgressDialog(getActivity(),R.style.AppCompatAlertDialogStyle);
+        progressDialog = new ProgressDialog(getActivity(), R.style.AppCompatAlertDialogStyle);
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.text_loading));
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -96,17 +125,10 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        page = 1;
-        mPresenter.loadBanners();
-        mPresenter.loadGenres();
-        mPresenter.loadCategories(1);
-        showLoadingAnimation();
-    }
-
-    @Override
     public void onGenreClick(Genre genre) {
-
+        Intent intent = new Intent(getActivity(), GenresActivity.class);
+        intent.putExtra(Constants.EXTRA_GENRE, genre);
+        getActivity().startActivity(intent);
     }
+
 }

@@ -39,8 +39,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".screen.detail.DetailActivity" />
         </activity>
-        <activity
-            android:name=".screen.detail_actor.DetailActorActivity"
+
+        <activity android:name=".screen.actor_detail.DetailActorActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 

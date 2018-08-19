@@ -19,6 +19,7 @@ import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.Video;
 import com.example.admin.moviedbapplication.screen.actor.ActorActivity;
+import com.example.admin.moviedbapplication.screen.home.HomeActivity;
 import com.example.admin.moviedbapplication.utils.Constants;
 import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -173,6 +174,13 @@ public class DetailActivity extends AppCompatActivity
     public void onInitializationFailure(YouTubePlayer.Provider provider,
                                         YouTubeInitializationResult youTubeInitializationResult) {
         showVideoLoadFail(youTubeInitializationResult.toString());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     @Override
