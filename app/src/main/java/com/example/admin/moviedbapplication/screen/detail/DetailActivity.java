@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,8 +19,10 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.Video;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.actor.ActorActivity;
-import com.example.admin.moviedbapplication.screen.home.HomeActivity;
 import com.example.admin.moviedbapplication.utils.Constants;
 import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -48,14 +51,21 @@ public class DetailActivity extends AppCompatActivity
     private ImageView mImageMovie;
     private ImageView mImageMovieBackdrop;
     private List<Genre> mGenres;
+    private ArrayList<String> mListId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
         mMovie = getIntent().getParcelableExtra(Constants.EXTRA_MOVIE);
-        mDetailPresenter = new DetailPresenter(this);
+
+        MovieRepository movieRepository = MovieRepository.getInstance(
+                MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getInstance(DetailActivity.this));
+        mDetailPresenter = new DetailPresenter(this, movieRepository);
         mGenres = DataGenreClass.getListGenres(mMovie.getGenreIds());
+        Log.e("TAG", mListId.toString());
+        mListId = mDetailPresenter.getListFavoriteIdMovie();
         showMovie(mMovie);
     }
 
@@ -97,6 +107,11 @@ public class DetailActivity extends AppCompatActivity
                 (YouTubePlayerSupportFragment) getSupportFragmentManager().
                         findFragmentById(R.id.youtube_player_view);
         frag.initialize(BuildConfig.YoutubeKey, this);
+        if(mListId!= null && mListId.contains(mMovie.getId())){
+            mButtonLike.setText(getString(R.string.liked));
+        }else {
+            mButtonLike.setText(getString(R.string.like));
+        }
     }
 
     @Override
@@ -106,11 +121,21 @@ public class DetailActivity extends AppCompatActivity
 
     @Override
     public void playVideo(Video video) {
-        mYouTubePlayer.setPlayerStateChangeListener(mPlayerStateChangeListener);
-        mYouTubePlayer.setPlaybackEventListener(mPlaybackEventListener);
-        if (!mWasRestored) {
-            mYouTubePlayer.cueVideo(video.getKey());
+        try {
+            mYouTubePlayer.setPlayerStateChangeListener(mPlayerStateChangeListener);
+            mYouTubePlayer.setPlaybackEventListener(mPlaybackEventListener);
+            if (!mWasRestored) {
+                mYouTubePlayer.cueVideo(video.getKey());
+            }
+        }catch (IllegalStateException e){
+            mYouTubePlayer.release();
         }
+
+    }
+
+    @Override
+    public void getListIdFavorites(ArrayList<String> ids) {
+        //mListId = ids;
     }
 
     private YouTubePlayer.PlaybackEventListener mPlaybackEventListener =
@@ -179,8 +204,6 @@ public class DetailActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
     }
 
     @Override
@@ -192,7 +215,15 @@ public class DetailActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.button_like:
-
+                if(mButtonLike.getText().toString().compareToIgnoreCase("LIKE") == 0){
+                    mDetailPresenter.addMovieIntoFavoriesList(mMovie.getId());
+                    mListId.add(mMovie.getId());
+                    mButtonLike.setText(R.string.liked);
+                }else {
+                    mDetailPresenter.removeMovieIntoFavoriesList(mMovie.getId());
+                    mListId.remove(mMovie.getId());
+                    mButtonLike.setText(R.string.like);
+                }
                 break;
         }
     }

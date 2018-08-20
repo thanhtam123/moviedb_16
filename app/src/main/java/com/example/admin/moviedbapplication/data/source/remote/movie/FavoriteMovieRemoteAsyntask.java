@@ -1,34 +1,43 @@
-package com.example.admin.moviedbapplication.data.source.remote;
+package com.example.admin.moviedbapplication.data.source.remote.movie;
 
 import android.os.AsyncTask;
 
+import com.example.admin.moviedbapplication.BuildConfig;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.source.Callback;
+import com.example.admin.moviedbapplication.data.source.remote.API;
 import com.example.admin.moviedbapplication.utils.Utils;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by TamTT on 8/7/2018.
+ * Created by TamTT on 8/13/2018.
  */
 
-public class MovieByGenreRemoteAsyntask extends AsyncTask<String, Void, List<Movie>> {
+public class FavoriteMovieRemoteAsyntask extends AsyncTask<Void, Void, List<Movie>> {
     private Callback<List<Movie>> mCallback;
-
     private Exception mException;
-
-    public MovieByGenreRemoteAsyntask(Callback<List<Movie>> callback) {
+    private ArrayList<String> mIds;
+    public FavoriteMovieRemoteAsyntask(ArrayList<String> ids, Callback<List<Movie>> callback) {
+        mIds = ids;
         mCallback = callback;
     }
 
     @Override
-    protected List<Movie> doInBackground(String... strings) {
+    protected List<Movie> doInBackground(Void... voids) {
+        ArrayList<Movie> movies = new ArrayList<>();
         try {
-            String json = Utils.getJSONStringFromURL(strings[0]);
-            return Utils.parseJson(json);
+            for (int i=0; i<mIds.size(); i++){
+                String url = API.BASE_URL + API.MOVIE + API.SLASH + mIds.get(i) + API.API_KEY
+                        + BuildConfig.ApiKey;
+                String json = Utils.getJSONStringFromURL(url);
+                movies.add(Utils.parseJsonIntoMovie(json));
+            }
+            return movies;
         } catch (IOException e) {
             e.printStackTrace();
             mException = e;

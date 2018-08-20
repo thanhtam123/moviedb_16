@@ -1,9 +1,9 @@
-package com.example.admin.moviedbapplication.data.source.remote;
+package com.example.admin.moviedbapplication.data.source.remote.genre;
 
 import com.example.admin.moviedbapplication.BuildConfig;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.source.Callback;
-import com.example.admin.moviedbapplication.data.source.GenreDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.API;
 
 import java.util.ArrayList;
 

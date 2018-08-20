@@ -2,8 +2,7 @@ package com.example.admin.moviedbapplication.screen.actor_detail;
 
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.source.Callback;
-import com.example.admin.moviedbapplication.data.source.MovieRepository;
-import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +16,9 @@ public class DetailActorPresenter implements DetailActorContract.Presenter {
     private MovieRepository mMovieRepository;
     private DetailActorContract.View mView;
 
-    public DetailActorPresenter(DetailActorContract.View viewDetail) {
+    public DetailActorPresenter(DetailActorContract.View viewDetail, MovieRepository movieRepository) {
         mView = viewDetail;
-        mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance());
+        mMovieRepository = movieRepository;
     }
 
     @Override

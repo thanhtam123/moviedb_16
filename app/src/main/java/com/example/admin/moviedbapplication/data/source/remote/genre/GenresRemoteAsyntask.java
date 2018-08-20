@@ -1,34 +1,35 @@
-package com.example.admin.moviedbapplication.data.source.remote;
+package com.example.admin.moviedbapplication.data.source.remote.genre;
 
 import android.os.AsyncTask;
 
-import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.source.Callback;
+import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.example.admin.moviedbapplication.utils.Utils;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by TamTT on 8/15/2018.
+ * Created by TamTT on 8/9/2018.
  */
 
-public class MovieByActorRemoteAsyntask extends AsyncTask<String, Void, List<Movie>> {
-
-    private Callback<List<Movie>> mCallback;
+public class GenresRemoteAsyntask extends AsyncTask<String, Void, List<Genre>> {
+    private Callback<ArrayList<Genre>> mCallback;
     private Exception mException;
 
-    public MovieByActorRemoteAsyntask( Callback<List<Movie>> callback) {
+    public GenresRemoteAsyntask(Callback<ArrayList<Genre>> callback) {
         mCallback = callback;
     }
 
     @Override
-    protected List<Movie> doInBackground(String... strings) {
+    protected List<Genre> doInBackground(String... strings) {
         try {
             String json = Utils.getJSONStringFromURL(strings[0]);
-            return Utils.parseJsonIntoMoviesByActor(json);
+            return Utils.parseJsonIntoGenre(json);
         } catch (IOException e) {
             e.printStackTrace();
             mException = e;
@@ -40,13 +41,14 @@ public class MovieByActorRemoteAsyntask extends AsyncTask<String, Void, List<Mov
     }
 
     @Override
-    protected void onPostExecute(List<Movie> movies) {
-        super.onPostExecute(movies);
+    protected void onPostExecute(List<Genre> genres) {
+        super.onPostExecute(genres);
         if (mCallback == null) {
             return;
         }
         if (mException == null) {
-            mCallback.onGetDataSuccess(movies);
+            DataGenreClass.setData(new ArrayList<>(genres));
+            mCallback.onGetDataSuccess(new ArrayList<>(genres));
         } else {
             mCallback.onGetDataFailure(mException);
         }

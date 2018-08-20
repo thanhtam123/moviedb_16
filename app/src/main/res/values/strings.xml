@@ -19,6 +19,7 @@
         on them with intentions of stealing Dr. Pym\'s inventions.</string>
     <string name="like">Like</string>
     <string name="about_actors">Cast</string>
+    <string name="msg_no_movie_match">There are no results that match your search</string>
     <string name="time">180</string>
     <string name="title_trailer">Trailer: </string>
     <string name="release_date">Release date:</string>
@@ -26,13 +27,14 @@
     <string name="msg_end_list">Reach end</string>
     <string name="home">Home</string>
     <string name="msg_loading_fail">Error</string>
-    <string name="msg_delete_favorite">Do you want to delete this movie from favorites</string>
+    <string name="msg_delete_favorite">Do you want to delete this movie from favorites?</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="text_actor_job">Job: Actor</string>
     <string name="text_actor_department">Department: Acting</string>
     <string name="title_known_for">Known for:</string>
     <string name="liked">LIKED</string>
+    <string name="msg_confirm_delete">Confirm the change</string>
     <string-array name="genres">
         <item>28_Action</item>
         <item>12_Adventure</item>

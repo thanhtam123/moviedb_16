@@ -24,7 +24,13 @@
         <activity android:name=".SplashActivity" />
         <activity
             android:name=".screen.detail.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.admin.moviedbapplication.screen.home.HomeActivity" />
+        </activity>
+
         <activity
             android:name=".screen.genre.GenresActivity"
             android:theme="@style/AppTheme.NoActionBar">

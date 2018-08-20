@@ -155,7 +155,7 @@ public class Utils {
     }
 
     public static void initProgressDialog(Context context, ProgressDialog progressDialog){
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(context, R.style.ProgressDialogTheme);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setMessage(context.getString(R.string.text_loading));
@@ -175,5 +175,15 @@ public class Utils {
         if(progressDialog != null){
             progressDialog.dismiss();
         }
+    }
+
+    public static String parseArrayToString(ArrayList<String> arrayList){
+        String result = "";
+        if(arrayList != null){
+            for (String s: arrayList) {
+                result += s + ",";
+            }
+        }
+        return result;
     }
 }

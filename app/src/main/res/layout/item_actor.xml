@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/dp_4"
             android:layout_marginStart="@dimen/dp_4"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"

@@ -61,9 +61,17 @@ public class Movie implements Parcelable{
         mOverview = object.getString(Movie.JsonKey.OVERVIEW);
         mReleaseDate = object.getString(Movie.JsonKey.RELEASE_DATE);
         JSONArray genresArray = object.optJSONArray(Movie.JsonKey.GENRE_IDS);
-        mGenreIds = new int[genresArray.length()];
-        for (int j = 0; j < genresArray.length(); j++) {
-            mGenreIds[j] = genresArray.optInt(j);
+        if(genresArray == null){
+            JSONArray genres = object.optJSONArray(JsonKey.GENRES);
+            mGenreIds = new int[genres.length()];
+            for (int j = 0; j < genres.length(); j++) {
+                mGenreIds[j] = genres.getJSONObject(j).getInt(JsonKey.ID_GENRE);
+            }
+        }else {
+            mGenreIds = new int[genresArray.length()];
+            for (int j = 0; j < genresArray.length(); j++) {
+                mGenreIds[j] = genresArray.optInt(j);
+            }
         }
     }
 

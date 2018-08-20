@@ -13,10 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.admin.moviedbapplication.R;
+import com.example.admin.moviedbapplication.screen.favorite.FavoritesFragment;
 import com.example.admin.moviedbapplication.screen.search.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
+
+    private HomeFragment mHomefragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,10 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displaySelectedScreen(R.id.nav_home);
+
+        if (savedInstanceState != null) {
+            mHomefragment = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragmentName");
+        }
     }
 
     @Override
@@ -67,15 +74,19 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     public void displaySelectedScreen(int itemId) {
         Fragment mFragment = null;
         switch (itemId) {
             case R.id.nav_home:
-                mFragment = new HomeFragment();
-                break;
-            case R.id.nav_genre:
+                mFragment = HomeFragment.newInstance();
                 break;
             case R.id.nav_favorites:
+                mFragment = new FavoritesFragment();
                 break;
             case R.id.nav_search:
                 mFragment = new SearchFragment();

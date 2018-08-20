@@ -21,6 +21,9 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.EndlessRecyclerViewScrollListener;
 import com.example.admin.moviedbapplication.screen.detail.DetailActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.OnItemMovieClickedListener;
@@ -42,7 +45,10 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
     private Genre mGenre;
 
     public GenresActivity() {
-        mGenrePresenter = new GenrePresenter(this);
+        MovieRepository movieRepository = MovieRepository.getInstance(
+                MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getInstance(this));
+        mGenrePresenter = new GenrePresenter(this, movieRepository);
     }
 
     @Override
@@ -76,6 +82,7 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
     @Override
     public void showGenres(ArrayList<Movie> movies) {
         mMovieArrayList.addAll(movies);
+        mAdapter.removeLoadingIndicator();
         if (mPage <= 2) {
             mAdapter.notifyDataSetChanged();
             ImageView imageBackdrop = findViewById(R.id.image_backdrop_genre);
@@ -84,7 +91,6 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
                     .load(Constants.IMAGE_PATH + mMovieArrayList.get(0).getPosterPath())
                     .into(imageBackdrop);
         } else {
-            mAdapter.removeLoadingIndicator();
             mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(),
                     mMovieArrayList.size() - 1);
         }

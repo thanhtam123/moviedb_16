@@ -1,4 +1,4 @@
-package com.example.admin.moviedbapplication.data.source.remote;
+package com.example.admin.moviedbapplication.data.source.remote.movie;
 
 import com.example.admin.moviedbapplication.BuildConfig;
 import com.example.admin.moviedbapplication.data.model.Category;
@@ -6,15 +6,16 @@ import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.MovieType;
 import com.example.admin.moviedbapplication.data.source.Callback;
-import com.example.admin.moviedbapplication.data.source.MovieDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.API;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by TamTT on 8/6/2018.
  */
 
-public class MovieRemoteDataSource implements MovieDataSource {
+public class MovieRemoteDataSource implements MovieDataSource.RemoteDataSource {
     private static MovieRemoteDataSource sInstance;
 
     private MovieRemoteDataSource() {
@@ -50,7 +51,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
     @Override
     public void searchMoviesByName(int page, String name, Callback<List<Movie>> callback) {
         String url = API.BASE_URL + API.SEARCH + API.MOVIE + API.API_KEY +
-                BuildConfig.ApiKey + API.QUERY + name;
+                BuildConfig.ApiKey + API.QUERY + name + API.PAGE + page;
         new MovieByGenreRemoteAsyntask(callback).execute(url);
     }
 
@@ -66,5 +67,10 @@ public class MovieRemoteDataSource implements MovieDataSource {
         String url = API.BASE_URL + API.CREDIT + API.SLASH + actorId +
                 API.API_KEY + BuildConfig.ApiKey;
         new MovieByActorRemoteAsyntask(callback).execute(url);
+    }
+
+    @Override
+    public void getListFavoritesMovie(ArrayList<String> arrayId, Callback<List<Movie>> callback) {
+        new FavoriteMovieRemoteAsyntask(arrayId, callback).execute();
     }
 }

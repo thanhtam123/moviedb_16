@@ -17,6 +17,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Cast;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.detail.DetailActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.OnItemMovieClickedListener;
 import com.example.admin.moviedbapplication.utils.Constants;
@@ -37,7 +40,8 @@ public class DetailActorActivity extends AppCompatActivity implements DetailActo
 
         mCast = getIntent().getParcelableExtra(Constants.EXTRA_ACTOR);
         Log.e("TAG", mCast.toString());
-        mPresenter = new DetailActorPresenter(this);
+        MovieRepository movieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance(), MovieLocalDataSource.getInstance(this));
+        mPresenter = new DetailActorPresenter(this, movieRepository);
         mPresenter.loadMovies(mCast.getCreditId());
         Utils.dismissProgressDialog(mProgressDialog);
     }

@@ -1,6 +1,7 @@
 package com.example.admin.moviedbapplication.screen.home;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,9 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.movie.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.genre.GenresActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.CategoryAdapter;
 import com.example.admin.moviedbapplication.screen.home.adapter.GenresAdapter;
@@ -34,6 +38,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements
         HomeContract.View, OnGenreItemClickListener {
 
+    private static HomeFragment mHomeFragment;
     private HomePresenter mPresenter;
     private RecyclerView recyclerCategory, recyclerGenre;
     private ProgressDialog progressDialog;
@@ -41,18 +46,33 @@ public class HomeFragment extends Fragment implements
     private ArrayList<Category> mCategories;
     private ArrayList<Genre> mGenres;
     private ProgressDialog mProgressDialog;
+    private static boolean mIsFirstLoad;
 
-    public HomeFragment() {
-        mPresenter = new HomePresenter(this);
+    public HomeFragment() {}
+
+    public static HomeFragment newInstance() {
+        Bundle args = new Bundle();
+        if (mHomeFragment == null) {
+            mHomeFragment = new HomeFragment();
+            mIsFirstLoad = true;
+        }else {
+            mIsFirstLoad = false;
+        }
+        args.putBoolean(Constants.EXTRA_FIRST_LOAD, mIsFirstLoad);
+        mHomeFragment.setArguments(args);
+        return mHomeFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        if(savedInstanceState != null){
-            mCategories = savedInstanceState.getParcelableArrayList(Constants.KEY_LIST_CATEGORY);
-            mGenres = savedInstanceState.getParcelableArrayList(Constants.KEY_LIST_GENRE);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(!mIsFirstLoad){
             showCategory(mCategories);
             showGenres(mGenres);
         }else {
@@ -63,10 +83,18 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        MovieRepository movieRepository = MovieRepository.getInstance(
+                MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getInstance(getContext()));
+        mPresenter = new HomePresenter(this, movieRepository);
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(Constants.KEY_LIST_CATEGORY, mCategories);
-        outState.putParcelableArrayList(Constants.KEY_LIST_GENRE, mGenres);
+
     }
 
     @Nullable
@@ -75,6 +103,9 @@ public class HomeFragment extends Fragment implements
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        if (((HomeActivity) getActivity()) != null) {
+            ((HomeActivity) getActivity()).setTitle(getResources().getString(R.string.home));
+        }
         recyclerCategory = view.findViewById(R.id.recycler_categery);
         recyclerGenre = view.findViewById(R.id.recycler_genre);
         return view;
@@ -89,6 +120,7 @@ public class HomeFragment extends Fragment implements
         recyclerCategory.setAdapter(adapter);
         adapter.updateData(categories);
         Utils.dismissProgressDialog(mProgressDialog);
+        mCategories = categories;
     }
 
     @Override
@@ -106,6 +138,7 @@ public class HomeFragment extends Fragment implements
                         LinearLayoutManager.HORIZONTAL, false));
         recyclerGenre.setAdapter(adapter);
         adapter.updateData(genres);
+        mGenres = genres;
     }
 
     @Override
@@ -130,5 +163,4 @@ public class HomeFragment extends Fragment implements
         intent.putExtra(Constants.EXTRA_GENRE, genre);
         getActivity().startActivity(intent);
     }
-
 }

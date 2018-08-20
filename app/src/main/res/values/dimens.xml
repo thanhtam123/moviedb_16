@@ -31,7 +31,7 @@
     <dimen name="item_search_image_width">96dp</dimen>
     <dimen name="rating_search_item">17dp</dimen>
     <dimen name="text_item_movie_title_search">30dp</dimen>
-    <dimen name="text_name_movie_detail">25sp</dimen>
+    <dimen name="text_name_movie_detail">22sp</dimen>
     <dimen name="text_genre_movie_detail">13sp</dimen>
     <dimen name="text_overview_detail">12sp</dimen>
     <dimen name="text_trailer">20sp</dimen>

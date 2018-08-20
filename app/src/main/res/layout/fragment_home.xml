@@ -9,7 +9,7 @@
         android:id="@+id/recycler_genre"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recycler_genres_height"
-        android:background="@color/color_orange_peel_star"
+        android:background="@color/color_tolopea_primary"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
