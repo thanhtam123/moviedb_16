@@ -33,6 +33,7 @@
     <string name="text_actor_department">Department: Acting</string>
     <string name="title_known_for">Known for:</string>
     <string name="liked">LIKED</string>
+    <string name="msg_no_movie_match">No movie match!</string>
     <string-array name="genres">
         <item>28_Action</item>
         <item>12_Adventure</item>

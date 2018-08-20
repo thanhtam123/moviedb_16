@@ -15,7 +15,6 @@ public class Constants {
     public static final String UPCOMING = "upcoming";
     public static final String GENRES = "genre";
     public static final double VOTE = 0.5;
-    public static final String EXTRA_MOVIE = "extra_movie";
     public static final String KEY_MOVIE_ID = "key_movie_id";
     public static final String EXTRA_TYPE = "extra_type";
     public static final String EXTRA_POPULAR = "extra_popular";
@@ -25,6 +24,10 @@ public class Constants {
     public static final String EXTRA_ACTOR = "EXTRA_ACTOR";
     public static final String KEY_MOVIE = "key_movie";
     public static final String EXTRA_GENRE = "extra_genre";
+    public static final String EXTRA_CATEGORY = "extra_category";
+    public static final String EXTRA_FIRST_LOAD = "extra_first_load";
+    public static final String EXTRA_MOVIE = "extra_movie";
+    public static int SECOND_PAGE = 2;
 
     private Constants() {
     }

@@ -26,10 +26,10 @@ import java.util.ArrayList;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private Context mContext;
-    private OnItemMovieClickedListener mOnItemClickedListener;
+    private CategoryAdapter.OnItemClickListener mOnItemClickedListener;
     private ArrayList<Movie> mMovieArrayList = new ArrayList<>();
 
-    void setOnItemClickedListener(OnItemMovieClickedListener onItemClickedListener) {
+    void setOnItemClickedListener(CategoryAdapter.OnItemClickListener onItemClickedListener) {
         mOnItemClickedListener = onItemClickedListener;
     }
 
@@ -50,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(mContext).
                 inflate(R.layout.item_movie, viewGroup, false);
-        return new MovieViewHolder(mContext, view,mOnItemClickedListener);
+        return new MovieViewHolder(mContext, view, mOnItemClickedListener);
     }
 
     @Override
@@ -69,9 +69,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         private RatingBar mRatingBar;
         private Movie mMovie;
         private Context mContext;
-        private OnItemMovieClickedListener mOnItemMovieClickedListener;
+        private CategoryAdapter.OnItemClickListener mOnItemMovieClickedListener;
+
         MovieViewHolder(Context context, View view,
-                        OnItemMovieClickedListener onItemMovieClickedListener) {
+                        CategoryAdapter.OnItemClickListener onItemMovieClickedListener) {
             super(view);
             mOnItemMovieClickedListener = onItemMovieClickedListener;
             mContext = context;

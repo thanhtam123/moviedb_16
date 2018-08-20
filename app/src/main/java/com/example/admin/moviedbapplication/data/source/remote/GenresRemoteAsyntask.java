@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.source.Callback;
+import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.example.admin.moviedbapplication.utils.Utils;
 
 import org.json.JSONException;
@@ -46,6 +47,7 @@ public class GenresRemoteAsyntask extends AsyncTask<String, Void, List<Genre>> {
             return;
         }
         if (mException == null) {
+            DataGenreClass.setData(new ArrayList<>(genres));
             mCallback.onGetDataSuccess(new ArrayList<>(genres));
         } else {
             mCallback.onGetDataFailure(mException);

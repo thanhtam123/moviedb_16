@@ -1,6 +1,5 @@
 package com.example.admin.moviedbapplication.screen.search;
 
-import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.data.source.MovieRepository;
@@ -8,6 +7,8 @@ import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSo
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.admin.moviedbapplication.screen.search.SearchFragment.FIRST_PAGE;
 
 /**
  * Created by TamTT on 8/9/2018.
@@ -24,32 +25,27 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void loadSearchMovie(int page, String name) {
+    public void loadSearchMovie(int page, final String name) {
+        if (page == FIRST_PAGE){
+            mViewSearch.clearData();
+        }
+        mViewSearch.addLoadingIndicator();
         mMovieRepository.searchMoviesByName(page, name, new Callback<List<Movie>>() {
             @Override
             public void onGetDataSuccess(List<Movie> data) {
-                mViewSearch.updateListSearch(new ArrayList<>(data));
+                if(data == null){
+                    mViewSearch.showNoResult();
+                }
+                else{
+                    mViewSearch.onGetMovieSuccess((ArrayList<Movie>) data);
+                }
             }
 
             @Override
             public void onGetDataFailure(Exception e) {
-                mViewSearch.showListMovieLoadFail(e);
+                mViewSearch.onGetMoviesFailure(e);
             }
         });
     }
 
-    @Override
-    public void loadRecommendMovies(String type, int page) {
-        mMovieRepository.getMovies(type, page, new Callback<Category>() {
-            @Override
-            public void onGetDataSuccess(Category data) {
-                mViewSearch.showListPopularMovie(data.getCategoryMovie());
-            }
-
-            @Override
-            public void onGetDataFailure(Exception e) {
-                mViewSearch.showListMovieLoadFail(e);
-            }
-        });
-    }
 }

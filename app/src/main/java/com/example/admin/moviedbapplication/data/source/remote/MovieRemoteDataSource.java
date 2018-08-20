@@ -29,15 +29,31 @@ public class MovieRemoteDataSource implements MovieDataSource {
 
     @Override
     public void getMovies(@MovieType String type, int page, Callback<Category> callback) {
-        String urlPopular = API.BASE_URL + API.MOVIE + API.SLASH + type +
-                API.API_KEY + BuildConfig.ApiKey + API.PAGE + page;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(API.BASE_URL)
+                .append(API.MOVIE )
+                .append(API.SLASH)
+                .append(type)
+                .append(API.API_KEY)
+                .append(BuildConfig.ApiKey)
+                .append(API.PAGE).append(page);
+        String urlPopular = stringBuilder.toString();
         new MovieRemoteAsynTask(callback, type).execute(urlPopular);
     }
 
     @Override
     public void getMovies(Genre genre, int page, Callback<List<Movie>> callback) {
-        String url = API.BASE_URL + API.DISCOVER + API.MOVIE + API.API_KEY +
-                BuildConfig.ApiKey + API.GENRES + genre.getId() + API.PAGE + page;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(API.BASE_URL)
+                .append(API.DISCOVER)
+                .append(API.MOVIE)
+                .append(API.API_KEY)
+                .append(BuildConfig.ApiKey)
+                .append(API.GENRES)
+                .append(genre.getId())
+                .append(API.PAGE)
+                .append(page);
+        String url = stringBuilder.toString();
         new MovieByGenreRemoteAsyntask(callback).execute(url);
     }
 
@@ -49,15 +65,29 @@ public class MovieRemoteDataSource implements MovieDataSource {
 
     @Override
     public void searchMoviesByName(int page, String name, Callback<List<Movie>> callback) {
-        String url = API.BASE_URL + API.SEARCH + API.MOVIE + API.API_KEY +
-                BuildConfig.ApiKey + API.QUERY + name;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(API.BASE_URL)
+                .append(API.SEARCH)
+                .append(API.MOVIE )
+                .append(API.API_KEY)
+                .append(BuildConfig.ApiKey)
+                .append(API.QUERY )
+                .append(name).append(API.PAGE)
+                .append(page);
+        String url = stringBuilder.toString();
         new MovieByGenreRemoteAsyntask(callback).execute(url);
     }
 
     @Override
     public void getMovie(String id, Callback<Movie> callback) {
-        String url = API.BASE_URL + API.MOVIE + API.SLASH + id + API.API_KEY
-                + BuildConfig.ApiKey;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(API.BASE_URL)
+                .append(API.MOVIE)
+                .append(API.SLASH)
+                .append(id)
+                .append(API.API_KEY)
+                .append(BuildConfig.ApiKey);
+        String url = stringBuilder.toString();
         new SingleMovieRemoteAsyntask(callback).execute(url);
     }
 }

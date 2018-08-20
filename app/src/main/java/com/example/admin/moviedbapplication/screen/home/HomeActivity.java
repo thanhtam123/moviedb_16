@@ -72,14 +72,14 @@ public class HomeActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (itemId) {
             case R.id.nav_home:
-                fragment = new HomeFragment();
+                fragment = HomeFragment.newInstance();
                 break;
             case R.id.nav_genre:
                 break;
             case R.id.nav_favorites:
                 break;
             case R.id.nav_search:
-                fragment = new SearchFragment();
+                fragment = SearchFragment.newInstance();
                 break;
             case R.id.nav_infor:
                 break;
