@@ -1,7 +1,14 @@
 package com.example.admin.moviedbapplication.data.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+
+import com.example.admin.moviedbapplication.data.source.local.MovieDao;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,22 +19,61 @@ import java.util.Arrays;
 /**
  * Created by TamTT on 8/6/2018.
  */
-
+@Entity(tableName = MovieDao.TABLE_MOVIE)
 public class Movie implements Parcelable {
+    @Ignore
     private int mVoteCount;
+
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     private String mId;
+
+    @Ignore
     private boolean mVideo;
+
+    @ColumnInfo(name = "rating")
     private double mVoteAverage;
+
+    @ColumnInfo(name = "title")
     private String mTitle;
+
+    @Ignore
     private double mPopularity;
+
+    @ColumnInfo(name = "image")
     private String mPosterPath;
+
+    @Ignore
     private String mOriginalLanguage;
+
+    @Ignore
     private String mOriginalTitle;
+
+    @Ignore
     private int[] mGenreIds;
+
+    @Ignore
     private String mBackdropPath;
+
+    @Ignore
     private boolean mAdult;
+
+    @ColumnInfo(name = "overview")
     private String mOverview;
+
+    @Ignore
     private String mReleaseDate;
+
+    private Movie(){}
+
+    public Movie(@NonNull String id, double voteAverage, String title, String posterPath, String overview) {
+        mId = id;
+        mVoteAverage = voteAverage;
+        mTitle = title;
+        mPosterPath = posterPath;
+        mOverview = overview;
+    }
 
     private Movie(Builder builder) {
         mVoteCount = builder.mVoteCount;
@@ -363,5 +409,7 @@ public class Movie implements Parcelable {
         String GENRES = "genres";
         String ID_GENRE = "id";
         String NAME_GENRE = "name";
+        String PERSON = "person";
+        String KNOWN_FOR = "known_for";
     }
 }
