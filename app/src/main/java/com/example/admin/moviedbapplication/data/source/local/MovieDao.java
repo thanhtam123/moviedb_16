@@ -15,6 +15,7 @@ import java.util.List;
 @Dao
 public interface MovieDao {
     String TABLE_MOVIE = "Movies";
+
     /**
      * Select all movie from movie table.
      *
@@ -36,6 +37,15 @@ public interface MovieDao {
      *
      * @param movieId the movie's id to be removed.
      */
-    @Query("DELETE FROM Movies WHERE id = :movieId")
+    @Query("DELETE FROM " + TABLE_MOVIE + " WHERE id = :movieId")
     int deleteMovie(String movieId);
+
+    /**
+     * Check if movie is in favorites list or not via id
+     *
+     * @param movieId: id movie
+     * @return movie's information
+     */
+    @Query("SELECT * FROM " + TABLE_MOVIE + " WHERE id = :movieId")
+    Movie isFavorites(String movieId);
 }

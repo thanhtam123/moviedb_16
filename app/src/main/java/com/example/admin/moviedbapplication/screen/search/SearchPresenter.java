@@ -3,7 +3,6 @@ package com.example.admin.moviedbapplication.screen.search;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.data.source.MovieRepository;
-import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,9 @@ public class SearchPresenter implements SearchContract.Presenter {
     private MovieRepository mMovieRepository;
     private SearchContract.View mViewSearch;
 
-    public SearchPresenter(SearchContract.View viewSearch) {
+    public SearchPresenter(SearchContract.View viewSearch, MovieRepository movieRepository) {
         mViewSearch = viewSearch;
-        mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance());
+        mMovieRepository = movieRepository;
     }
 
     @Override
@@ -40,12 +39,10 @@ public class SearchPresenter implements SearchContract.Presenter {
                     mViewSearch.onGetMovieSuccess((ArrayList<Movie>) data);
                 }
             }
-
             @Override
             public void onGetDataFailure(Exception e) {
                 mViewSearch.onGetMoviesFailure(e);
             }
         });
     }
-
 }

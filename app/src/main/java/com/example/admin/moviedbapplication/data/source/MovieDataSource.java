@@ -12,17 +12,19 @@ import java.util.List;
  */
 
 public interface MovieDataSource {
-    interface RemoteDataSource{
+    interface RemoteDataSource {
         /**
          * Load movie from server
-         * @param type          : movie type like now playing, top rate, ....
-         * @param page          : current page
-         * @param callback      : callback
+         *
+         * @param type     : movie type like now playing, top rate, ....
+         * @param page     : current page
+         * @param callback : callback
          */
         void getMovies(@MovieType String type, int page, Callback<Category> callback);
 
         /**
          * Get moives by genre
+         *
          * @param genre
          * @param callback
          */
@@ -36,12 +38,14 @@ public interface MovieDataSource {
 
         void getMovieByActor(String actorId, Callback<List<Movie>> callback);
     }
-    interface LocalDataSource{
+
+    interface LocalDataSource {
         void getAllMovies(Callback<List<Movie>> callback);
 
         int deleteMovie(String idMovie);
 
         long insertMovies(Movie movie);
-    }
 
+        Movie isFavorites(String idMovie);
+    }
 }

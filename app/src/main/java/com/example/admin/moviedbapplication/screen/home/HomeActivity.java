@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.admin.moviedbapplication.R;
+import com.example.admin.moviedbapplication.screen.favorites.FavoritesFagment;
 import com.example.admin.moviedbapplication.screen.search.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity
@@ -77,6 +78,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_genre:
                 break;
             case R.id.nav_favorites:
+                fragment = FavoritesFagment.newInstance();
                 break;
             case R.id.nav_search:
                 fragment = SearchFragment.newInstance();

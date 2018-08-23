@@ -36,6 +36,9 @@
     <string name="msg_no_movie_match">No movie match!</string>
     <string name="msg_no_internet">No internet connection</string>
     <string name="msg_confirm_delete">Confirm!</string>
+    <string name="add_favorite">Add into favorites</string>
+    <string name="remove_favorite">Remove from favorites</string>
+    <string name="msg_update_list_failue">Update fail. Please try again!</string>
     <string-array name="genres">
         <item>28_Action</item>
         <item>12_Adventure</item>

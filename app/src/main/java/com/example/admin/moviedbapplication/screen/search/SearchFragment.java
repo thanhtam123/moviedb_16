@@ -22,6 +22,10 @@ import android.widget.Toast;
 
 import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.source.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieDatabase;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.EndlessRecyclerViewScrollListener;
 import com.example.admin.moviedbapplication.screen.detail.DetailActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.OnItemMovieClickedListener;
@@ -44,6 +48,7 @@ public class SearchFragment extends Fragment implements
     private SearchPresenter mSearchPresenter;
     private SearchView.OnQueryTextListener mQueryTextListener;
     private int mPage = FIRST_PAGE;
+    private MovieRepository mMovieRepository;
     private boolean mIsLoading;
     private String mSearchKey;
 
@@ -76,7 +81,9 @@ public class SearchFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSearchPresenter = new SearchPresenter(this);
+        mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getinstance(MovieDatabase.getInstance(getContext()).movieDao()));
+        mSearchPresenter = new SearchPresenter(this, mMovieRepository);
         initRecyclerView();
     }
 
@@ -191,10 +198,10 @@ public class SearchFragment extends Fragment implements
                 new EndlessRecyclerViewScrollListener(linearLayoutManager) {
                     @Override
                     public void onLoadMore(int page, int totalItemsCount) {
-                       if (!mIsLoading){
-                          mPage++;
-                          loadData();
-                       }
+                        if (!mIsLoading){
+                            mPage++;
+                            loadData();
+                        }
                     }
                 });
     }

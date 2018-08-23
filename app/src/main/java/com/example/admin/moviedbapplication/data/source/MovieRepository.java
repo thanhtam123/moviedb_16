@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class MovieRepository implements MovieDataSource.RemoteDataSource,
-                                        MovieDataSource.LocalDataSource{
+        MovieDataSource.LocalDataSource {
     private static MovieRepository sInstance;
     @NonNull
     private MovieDataSource.RemoteDataSource mRemoteDataSource;
@@ -78,5 +78,10 @@ public class MovieRepository implements MovieDataSource.RemoteDataSource,
     @Override
     public long insertMovies(Movie movie) {
         return mLocalDataSource.insertMovies(movie);
+    }
+
+    @Override
+    public Movie isFavorites(String idMovie) {
+        return mLocalDataSource.isFavorites(idMovie);
     }
 }

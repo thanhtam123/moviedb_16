@@ -17,6 +17,10 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.source.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieDatabase;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.detail.DetailActivity;
 import com.example.admin.moviedbapplication.screen.genre.GenresActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.CategoryAdapter;
@@ -38,32 +42,34 @@ public class HomeFragment extends Fragment implements
     private RecyclerView mRecyclerCategory, mRecyclerGenre;
     private ProgressDialog mProgressDialog;
     private CategoryAdapter mAdapter;
+    private MovieRepository mMovieRepository;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
     public HomeFragment() {
-
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter = new HomePresenter(this);
-        mRecyclerCategory = view.findViewById(R.id.recycler_categery);
-        mRecyclerGenre = view.findViewById(R.id.recycler_genre);
-        mPresenter.loadGenres();
-        mPresenter.loadCategories();
-        Utils.initProgressDialog(getActivity(), mProgressDialog);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mMovieRepository = MovieRepository.getInstance(
+                MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getinstance(MovieDatabase.getInstance(getContext()).movieDao()));
+        mPresenter = new HomePresenter(this, mMovieRepository);
+        mRecyclerCategory = view.findViewById(R.id.recycler_categery);
+        mRecyclerGenre = view.findViewById(R.id.recycler_genre);
+        mPresenter.loadGenres();
+        mPresenter.loadCategories();
+        Utils.initProgressDialog(getActivity(), mProgressDialog);
     }
 
     @Override

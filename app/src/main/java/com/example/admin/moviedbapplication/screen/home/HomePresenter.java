@@ -7,7 +7,6 @@ import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.data.source.GenreRepository;
 import com.example.admin.moviedbapplication.data.source.MovieRepository;
 import com.example.admin.moviedbapplication.data.source.remote.GenreRemoteDataSource;
-import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +28,9 @@ public class HomePresenter implements HomeContract.Presenter {
     private List<Category> mCategories;
     private int mCountRunningAsyn;
 
-    public HomePresenter(HomeContract.View viewHome) {
+    public HomePresenter(HomeContract.View viewHome, MovieRepository movieRepository) {
         mViewHome = viewHome;
-        mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance());
+        mMovieRepository = movieRepository;
         mGenreRepository = GenreRepository.getInstance(GenreRemoteDataSource.getInstance());
         mCategories = new ArrayList<>();
         mGenres = new ArrayList<>();
@@ -114,5 +113,4 @@ public class HomePresenter implements HomeContract.Presenter {
             }
         });
     }
-
 }
