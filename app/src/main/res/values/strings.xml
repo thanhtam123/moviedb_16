@@ -34,6 +34,8 @@
     <string name="title_known_for">Known for:</string>
     <string name="liked">LIKED</string>
     <string name="msg_no_movie_match">No movie match!</string>
+    <string name="msg_no_internet">No internet connection</string>
+    <string name="msg_confirm_delete">Confirm!</string>
     <string-array name="genres">
         <item>28_Action</item>
         <item>12_Adventure</item>

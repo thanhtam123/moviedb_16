@@ -27,6 +27,7 @@ public class Constants {
     public static final String EXTRA_CATEGORY = "extra_category";
     public static final String EXTRA_FIRST_LOAD = "extra_first_load";
     public static final String EXTRA_MOVIE = "extra_movie";
+    public static final String DATABASE_NAME = "Movies.db";
     public static int SECOND_PAGE = 2;
 
     private Constants() {

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by TamTT on 8/6/2018.
  */
 
-public class MovieRemoteDataSource implements MovieDataSource {
+public class MovieRemoteDataSource implements MovieDataSource.RemoteDataSource {
     private static MovieRemoteDataSource sInstance;
 
     private MovieRemoteDataSource() {
