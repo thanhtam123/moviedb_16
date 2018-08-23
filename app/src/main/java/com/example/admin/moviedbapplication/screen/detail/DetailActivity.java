@@ -19,7 +19,10 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.model.Video;
-import com.example.admin.moviedbapplication.screen.actor.ActorActivity;
+import com.example.admin.moviedbapplication.data.source.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieDatabase;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.utils.Constants;
 import com.example.admin.moviedbapplication.utils.DataGenreClass;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -34,6 +37,7 @@ public class DetailActivity extends AppCompatActivity
         View.OnClickListener {
     public static final String EXTRA_MOVIE = "EXTRA_MOVIE";
 
+    private MovieRepository mMovieRepository;
     private DetailContract.Presenter mDetailPresenter;
     private Movie mMovie;
     private YouTubePlayer mYouTubePlayer;
@@ -49,6 +53,8 @@ public class DetailActivity extends AppCompatActivity
     private ImageView mImageMovie;
     private ImageView mImageMovieBackdrop;
     private List<Genre> mGenres;
+    private List<Movie> mMovies;
+    private boolean mIsFavorites;
 
     public static Intent getMovieIntent(Context context, Movie movie) {
         Intent intent = new Intent(context, DetailActivity.class);
@@ -60,8 +66,14 @@ public class DetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
-        mDetailPresenter = new DetailPresenter(this);
+
+        mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getinstance(MovieDatabase.getInstance(this).movieDao()));
+
+        mDetailPresenter = new DetailPresenter(this, mMovieRepository);
+
         mMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        mIsFavorites = mDetailPresenter.checkFavorite(mMovie.getId());
         mGenres = DataGenreClass.getListGenres(mMovie.getGenreIds());
         showMovie(mMovie);
     }
@@ -100,10 +112,14 @@ public class DetailActivity extends AppCompatActivity
         mButtonCast = findViewById(R.id.button_cast_detail);
         mImageMovie = findViewById(R.id.image_movie_detail);
         mImageMovieBackdrop = findViewById(R.id.backdrop);
+        if (mIsFavorites){
+            mButtonLike.setText(getString(R.string.liked));
+        }
         YouTubePlayerSupportFragment frag =
                 (YouTubePlayerSupportFragment) getSupportFragmentManager().
                         findFragmentById(R.id.youtube_player_view);
         frag.initialize(BuildConfig.YoutubeKey, this);
+
     }
 
     @Override
@@ -118,6 +134,11 @@ public class DetailActivity extends AppCompatActivity
         if (!mWasRestored) {
             mYouTubePlayer.cueVideo(video.getKey());
         }
+    }
+
+    @Override
+    public void getFavorites(List<Movie> movies) {
+        mMovies = movies;
     }
 
     private YouTubePlayer.PlaybackEventListener mPlaybackEventListener =
@@ -190,7 +211,26 @@ public class DetailActivity extends AppCompatActivity
 
                 break;
             case R.id.button_like:
+                if (mIsFavorites) {
+                    mDetailPresenter.removeFavorites(mMovie.getId());
+                } else {
+                    mDetailPresenter.addFavorites(mMovie);
+                }
                 break;
         }
+    }
+
+    @Override
+    public void updateFavoritesButton(boolean isFavorite) {
+        if (isFavorite) {
+            mButtonLike.setText(getString(R.string.liked));
+        } else {
+            mButtonLike.setText(getString(R.string.like));
+        }
+    }
+
+    @Override
+    public void updateFavoritesListFailure() {
+        Toast.makeText(this, getString(R.string.msg_update_list_failue), Toast.LENGTH_SHORT).show();
     }
 }

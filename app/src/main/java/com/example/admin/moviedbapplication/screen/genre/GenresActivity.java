@@ -22,6 +22,10 @@ import com.example.admin.moviedbapplication.R;
 import com.example.admin.moviedbapplication.data.model.Category;
 import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
+import com.example.admin.moviedbapplication.data.source.MovieRepository;
+import com.example.admin.moviedbapplication.data.source.local.MovieDatabase;
+import com.example.admin.moviedbapplication.data.source.local.MovieLocalDataSource;
+import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 import com.example.admin.moviedbapplication.screen.EndlessRecyclerViewScrollListener;
 import com.example.admin.moviedbapplication.screen.detail.DetailActivity;
 import com.example.admin.moviedbapplication.screen.home.adapter.OnItemMovieClickedListener;
@@ -37,6 +41,7 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
     private GenreContract.Presenter mGenrePresenter;
     private RequestOptions mRequestOptions;
     private boolean mIsLoading;
+    private MovieRepository mMovieRepository;
     private int mPage = 1;
     private ProgressDialog mProgressDialog;
     private Category mCategory;
@@ -54,10 +59,6 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
         return intent;
     }
 
-    public GenresActivity() {
-        mGenrePresenter = new GenrePresenter(this);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,10 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
         actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_back);
 
+        mMovieRepository = MovieRepository.getInstance(
+                MovieRemoteDataSource.getInstance(),
+                MovieLocalDataSource.getinstance(MovieDatabase.getInstance(this).movieDao()));
+        mGenrePresenter = new GenrePresenter(this, mMovieRepository);
         mGenre = getIntent().getParcelableExtra(Constants.EXTRA_GENRE);
         mCategory = getIntent().getParcelableExtra(Constants.EXTRA_TYPE);
 
@@ -144,31 +149,35 @@ public class GenresActivity extends AppCompatActivity implements GenreContract.V
         mAdapter.setOnItemClickedListener(this);
         mRecyclerGenre.addOnScrollListener(
                 new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                if(!mIsLoading){
-                    mAdapter.addLoadingIndicator();
-                    if(mGenre != null){
-                        mGenrePresenter.loadGenres(mGenre, mPage);
-                    }else {
-                        mGenrePresenter.loadCategories(mPage, mCategory.getCategeryName().
-                                toLowerCase().replace(' ','_'));
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount) {
+                        if (mIsLoading) {
+                            return;
+                        }
+                        mPage ++;
+                        loadData();
                     }
-                    mPage += 1;
-                    mIsLoading = true;
-                }
-            }
-        });
+                });
+    }
+
+    private void loadData() {
+        mIsLoading = true;
+        mAdapter.addLoadingIndicator();
+        if (mGenre != null) {
+            mGenrePresenter.loadGenres(mGenre, mPage);
+        } else {
+            mGenrePresenter.loadCategories(mPage, mCategory.getCategeryName().
+                    toLowerCase().replace(' ', '_'));
+        }
     }
 
     @Override
     public void onMovieClick(Movie movie) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(Constants.EXTRA_MOVIE, movie);
+        Intent intent = DetailActivity.getMovieIntent(this, movie);
         startActivity(intent);
     }
 
-    void initCollapsingToolbar(String title){
+    void initCollapsingToolbar(String title) {
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
         collapsingToolbarLayout.setTitle(Html.fromHtml("<font color=#1a0042>"
                 + title + "</font>"));

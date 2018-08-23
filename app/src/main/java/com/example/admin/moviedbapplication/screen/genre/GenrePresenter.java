@@ -5,7 +5,6 @@ import com.example.admin.moviedbapplication.data.model.Genre;
 import com.example.admin.moviedbapplication.data.model.Movie;
 import com.example.admin.moviedbapplication.data.source.Callback;
 import com.example.admin.moviedbapplication.data.source.MovieRepository;
-import com.example.admin.moviedbapplication.data.source.remote.MovieRemoteDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,9 @@ public class GenrePresenter implements GenreContract.Presenter {
     private MovieRepository mMovieRepository;
     private GenreContract.View mGenreView;
 
-    public GenrePresenter(GenreContract.View genreView) {
+    public GenrePresenter(GenreContract.View genreView, MovieRepository movieRepository) {
         mGenreView = genreView;
-        mMovieRepository = MovieRepository.getInstance(MovieRemoteDataSource.getInstance());
+        mMovieRepository = movieRepository;
     }
 
     @Override
@@ -46,7 +45,6 @@ public class GenrePresenter implements GenreContract.Presenter {
             public void onGetDataSuccess(Category data) {
                 mGenreView.showGenres(new ArrayList<>(data.getCategoryMovie()));
             }
-
             @Override
             public void onGetDataFailure(Exception e) {
                 mGenreView.showGenresFail(e);
