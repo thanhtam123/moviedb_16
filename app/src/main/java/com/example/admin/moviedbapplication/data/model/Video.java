@@ -1,5 +1,8 @@
 package com.example.admin.moviedbapplication.data.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by TamTT on 8/12/2018.
  */
@@ -11,6 +14,11 @@ public class Video {
     public Video(String id, String key) {
         mId = id;
         mKey = key;
+    }
+
+    public Video(JSONObject videoObject) throws JSONException {
+        mId = videoObject.getString(Video.JsonVideoKey.ID);
+        mKey = videoObject.getString(Video.JsonVideoKey.KEY);
     }
 
     public String getId() {

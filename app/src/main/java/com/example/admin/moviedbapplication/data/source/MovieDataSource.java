@@ -32,4 +32,6 @@ public interface MovieDataSource {
     void searchMoviesByName(int page, String name, Callback<List<Movie>> callback);
 
     void getMovie(String id, Callback<Movie> callback);
+
+    void getMovieByActor(String actorId, Callback<List<Movie>> callback);
 }
